@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simmodlr Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f4f1ea;
+  --paper: #fbf8f2;
+  --panel: #fffdf8;
+  --panel-2: #efe7da;
+  --ink: #211c18;
+  --body: #5d554d;
+  --line: #ded1bf;
+  --accent: #0e8c78;
+  --accent-2: #b76d33;
+  --accent-soft: rgba(14, 140, 120, 0.1);
+  --shadow: 0 20px 60px rgba(77, 54, 29, 0.08);
+  --display: "Fraunces", serif;
+  --sans: "Manrope", sans-serif;
+  --mono: "JetBrains Mono", monospace;
+}
+
+body {
+  font-family: var(--sans);
+  background:
+    radial-gradient(circle at top left, rgba(183,109,51,0.08), transparent 30%),
+    linear-gradient(180deg, #f8f4ed 0%, var(--bg) 50%, #f6f1e9 100%);
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+.shell {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(18px);
+  background: rgba(244,241,234,0.75);
+  border-bottom: 1px solid rgba(33,28,24,0.07);
+}
+
+.topbar-inner {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand {
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-size: 1.3rem;
+}
+
+.brand span { color: var(--accent); }
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--body);
+  font-size: 0.92rem;
+}
+
+.hero {
+  padding: 5.5rem 0 3rem;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid rgba(14,140,120,0.16);
+  background: rgba(14,140,120,0.07);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  max-width: 12ch;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 em {
+  color: var(--accent);
+  font-style: normal;
+}
+
+.hero-copy {
+  max-width: 34rem;
+  font-size: 1.12rem;
+  color: var(--body);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.95rem 1.4rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: #fffdf8;
+}
+
+.btn-secondary {
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: rgba(255,255,255,0.5);
+}
+
+.hero-note {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8b7b6d;
+}
+
+.hero-visual {
+  position: relative;
+  padding: 1.2rem;
+  border: 1px solid rgba(33,28,24,0.08);
+  border-radius: 1.8rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,253,248,0.98));
+  box-shadow: var(--shadow);
+}
+
+.hero-visual::before {
+  content: "";
+  position: absolute;
+  inset: 1rem;
+  border-radius: 1.2rem;
+  border: 1px dashed rgba(14,140,120,0.16);
+  pointer-events: none;
+}
+
+.visual-window {
+  border: 1px solid rgba(33,28,24,0.08);
+  border-radius: 1.2rem;
+  overflow: hidden;
+  background: var(--panel);
+}
+
+.window-top {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(33,28,24,0.07);
+  background: rgba(239,231,218,0.55);
+}
+
+.window-dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 999px;
+}
+
+.window-title {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7b6d61;
+}
+
+.window-body {
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.mini-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 0.9rem;
+}
+
+.diagram, .summary, .insight {
+  border: 1px solid rgba(33,28,24,0.07);
+  border-radius: 1rem;
+  background: rgba(255,255,255,0.75);
+}
+
+.diagram {
+  padding: 1rem;
+}
+
+.diagram-label, .summary-label, .insight-label, .section-kicker {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #897a6d;
+}
+
+.flow {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.flow-step {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 0.9rem;
+  background: linear-gradient(90deg, rgba(14,140,120,0.08), rgba(255,255,255,0.65));
+}
+
+.flow-step strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.flow-step span {
+  color: var(--body);
+  font-size: 0.82rem;
+}
+
+.chip {
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid rgba(33,28,24,0.08);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+}
+
+.summary {
+  padding: 1rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(33,28,24,0.06);
+}
+
+.metric:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.metric span {
+  color: var(--body);
+  font-size: 0.82rem;
+}
+
+.metric strong {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+.insight {
+  padding: 1rem;
+  background: linear-gradient(180deg, rgba(14,140,120,0.08), rgba(255,255,255,0.65));
+}
+
+.insight p {
+  margin-top: 0.7rem;
+  color: var(--body);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.cred-strip {
+  padding: 1.4rem 0 4rem;
+}
+
+.cred-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.cred-card {
+  background: rgba(255,255,255,0.52);
+  border: 1px solid rgba(33,28,24,0.07);
+  border-radius: 1.2rem;
+  padding: 1.2rem;
+}
+
+.cred-card strong {
+  display: block;
+  font-size: 1.5rem;
+  font-family: var(--display);
+  margin-bottom: 0.3rem;
+}
+
+.cred-card span {
+  color: var(--body);
+  font-size: 0.9rem;
+}
+
+.section {
+  padding: 4.5rem 0;
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: 2.3rem;
+}
+
+.section-head h2 {
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.section-head p {
+  color: var(--body);
+  font-size: 1.02rem;
+  line-height: 1.85;
+  max-width: 34rem;
+}
+
+.problem-layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 1.2rem;
+}
+
+.argument-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.argument {
+  background: rgba(255,255,255,0.58);
+  border: 1px solid rgba(33,28,24,0.07);
+  border-radius: 1.25rem;
+  padding: 1.2rem;
+}
+
+.argument strong {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 1rem;
+}
+
+.argument p {
+  color: var(--body);
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+
+.comparison {
+  background: var(--panel);
+  border: 1px solid rgba(33,28,24,0.07);
+  border-radius: 1.4rem;
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.chart-header h3 {
+  font-size: 1rem;
+}
+
+.chart-header span {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8a7c70;
+}
+
+.chart-columns {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.8rem;
+  align-items: end;
+  min-height: 18rem;
+}
+
+.chart-col {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+}
+
+.bars {
+  height: 13rem;
+  width: 100%;
+  display: flex;
+  gap: 0.35rem;
+  align-items: end;
+}
+
+.bar {
+  flex: 1;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.bar-formula { background: #d7ccbf; }
+.bar-sim { background: linear-gradient(180deg, var(--accent), #0b6f60); }
+
+.chart-value {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  color: var(--body);
+}
+
+.chart-axis {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: #87776b;
+}
+
+.workflow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.workflow-card {
+  position: relative;
+  background: rgba(255,255,255,0.62);
+  border: 1px solid rgba(33,28,24,0.07);
+  border-radius: 1.4rem;
+  padding: 1.4rem;
+  overflow: hidden;
+}
+
+.workflow-number {
+  position: absolute;
+  right: 1rem;
+  top: 0.75rem;
+  font-family: var(--display);
+  font-size: 3.2rem;
+  color: rgba(14,140,120,0.12);
+}
+
+.workflow-card h3 {
+  font-size: 1.08rem;
+  margin-bottom: 0.65rem;
+}
+
+.workflow-card p {
+  color: var(--body);
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.workflow-tags {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.workflow-tags span {
+  border-radius: 999px;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid rgba(14,140,120,0.16);
+  background: rgba(14,140,120,0.07);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.64rem;
+}
+
+.case-study {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 1.2rem;
+}
+
+.case-copy, .case-panel {
+  background: rgba(255,255,255,0.58);
+  border: 1px solid rgba(33,28,24,0.07);
+  border-radius: 1.4rem;
+  padding: 1.35rem;
+}
+
+.case-copy p {
+  color: var(--body);
+  font-size: 0.96rem;
+  line-height: 1.85;
+  margin-top: 0.9rem;
+}
+
+.result-panel {
+  border: 1px solid rgba(33,28,24,0.08);
+  border-radius: 1.1rem;
+  overflow: hidden;
+  background: var(--panel);
+}
+
+.result-top {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.85rem 1rem;
+  background: rgba(239,231,218,0.55);
+  border-bottom: 1px solid rgba(33,28,24,0.06);
+}
+
+.result-title {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  color: #87786a;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.result-body {
+  padding: 1rem;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0.2rem;
+  border-bottom: 1px solid rgba(33,28,24,0.06);
+}
+
+.result-row:last-child {
+  border-bottom: none;
+}
+
+.result-row span {
+  color: var(--body);
+  font-size: 0.88rem;
+}
+
+.result-row strong {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+}
+
+.insight-band {
+  margin-top: 1rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  background: linear-gradient(180deg, rgba(14,140,120,0.08), rgba(255,255,255,0.7));
+  border: 1px solid rgba(14,140,120,0.14);
+}
+
+.insight-band p {
+  margin-top: 0.55rem;
+  color: var(--body);
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.moments {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.moment {
+  padding: 1.2rem;
+  border-radius: 1.25rem;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(33,28,24,0.07);
+}
+
+.moment strong {
+  display: block;
+  margin-bottom: 0.55rem;
+  font-size: 1rem;
+}
+
+.moment p {
+  color: var(--body);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.cta {
+  padding: 5rem 0 6rem;
+}
+
+.cta-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(255,255,255,0.75), rgba(239,231,218,0.85));
+  border: 1px solid rgba(33,28,24,0.08);
+  border-radius: 1.8rem;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+}
+
+.cta-card::after {
+  content: "";
+  position: absolute;
+  right: -6rem;
+  top: -5rem;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(14,140,120,0.12), transparent 70%);
+}
+
+.cta-card h2 {
+  position: relative;
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  max-width: 10ch;
+  margin: 0.6rem 0 1rem;
+}
+
+.cta-card p {
+  position: relative;
+  max-width: 38rem;
+  color: var(--body);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.footer {
+  padding: 0 0 2.5rem;
+}
+
+.footer-inner {
+  border-top: 1px solid rgba(33,28,24,0.08);
+  padding-top: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: #85776b;
+  font-size: 0.88rem;
+}
+
+@media (max-width: 980px) {
+  .nav { display: none; }
+  .hero-grid, .section-head, .problem-layout, .case-study { grid-template-columns: 1fr; }
+  .cred-grid, .workflow, .moments { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 720px) {
+  .cred-grid, .workflow, .moments { grid-template-columns: 1fr; }
+  .topbar-inner, .shell { width: min(100% - 1.25rem, 1180px); }
+  .hero { padding-top: 4rem; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="/">simmodlr<span>.</span></a>
+    <ul class="nav">
+      <li><a href="#problem">Why simulation</a></li>
+      <li><a href="#workflow">How it works</a></li>
+      <li><a href="#example">Worked example</a></li>
+      <li><a href="#cta">Try it</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="shell">
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Discrete-event simulation in the browser</div>
+        <h1>Understand your system before you <em>commit to it.</em></h1>
+        <p class="hero-copy">Simmodlr is a free browser-based simulation studio for modelling queues, resources, and service processes. It is built for decisions that need more than back-of-envelope estimates and more honesty than a spreadsheet can give you.</p>
+        <div class="hero-actions">
+          <a href="#cta" class="btn btn-primary">Start modelling free</a>
+          <a href="#example" class="btn btn-secondary">See the worked example</a>
+        </div>
+        <div class="hero-note">No install · No licence barrier · AI-assisted model building · Results with confidence intervals</div>
+      </div>
+      <div class="hero-visual">
+        <div class="visual-window">
+          <div class="window-top">
+            <div class="window-dot" style="background:#ff5f57"></div>
+            <div class="window-dot" style="background:#ffbd2e"></div>
+            <div class="window-dot" style="background:#28ca41"></div>
+            <div class="window-title">Live model snapshot</div>
+          </div>
+          <div class="window-body">
+            <div class="mini-grid">
+              <div class="diagram">
+                <div class="diagram-label">Pathway model</div>
+                <div class="flow">
+                  <div class="flow-step">
+                    <div><strong>Patient arrivals</strong><span>Average 12 per hour entering the system</span></div>
+                    <div class="chip">Source</div>
+                  </div>
+                  <div class="flow-step">
+                    <div><strong>Triage split</strong><span>High-acuity priority and low-acuity secondary routing</span></div>
+                    <div class="chip">Route</div>
+                  </div>
+                  <div class="flow-step">
+                    <div><strong>Shared clinicians</strong><span>Three resources serving both streams</span></div>
+                    <div class="chip">Pool</div>
+                  </div>
+                </div>
+              </div>
+              <div class="summary">
+                <div class="summary-label">Key outputs</div>
+                <div class="metric"><span>High-acuity wait</span><strong>4.2 min</strong></div>
+                <div class="metric"><span>Low-acuity wait</span><strong>22.5 min</strong></div>
+                <div class="metric"><span>Utilisation</span><strong>85.8%</strong></div>
+                <div class="metric"><span>Replications</span><strong>30</strong></div>
+              </div>
+            </div>
+            <div class="insight">
+              <div class="insight-label">AI insight</div>
+              <p>The priority mechanism protects urgent patients but pushes substantial delay onto the low-acuity stream. Model dedicated low-acuity capacity before committing to the current staffing pattern.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cred-strip">
+    <div class="cred-grid">
+      <div class="cred-card"><strong>Browser-native</strong><span>No software install, no heavy workflow, no hidden setup.</span></div>
+      <div class="cred-card"><strong>Statistically sound</strong><span>Confidence intervals and replication-based outputs, not just averages.</span></div>
+      <div class="cred-card"><strong>DES-assisted</strong><span>Describe your system in plain English and let DES build a starting model for you.</span></div>
+      <div class="cred-card"><strong>Free to start</strong><span>Accessible enough for learners, strong enough for serious analysis.</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="problem">
+    <div class="section-head">
+      <div>
+        <div class="section-kicker">Why simulation</div>
+        <h2>Spreadsheets lie about queues.</h2>
+      </div>
+      <p>Queueing formulas assume neat averages and steady-state behaviour. Real systems are messier than that. Variability compounds, routing creates unequal experiences, and shared resources produce knock-on effects that a spreadsheet simply cannot reveal.</p>
+    </div>
+    <div class="problem-layout">
+      <div class="argument-list">
+        <article class="argument">
+          <strong>Variability is non-linear</strong>
+          <p>A server at 90% utilisation is not a slightly worse version of one at 50%. Waiting times accelerate, often dramatically, and simple intuition breaks down.</p>
+        </article>
+        <article class="argument">
+          <strong>Distributions matter, not just averages</strong>
+          <p>Service times with the same mean can create very different queue behaviour. Averages hide uncertainty. Simulation exposes it.</p>
+        </article>
+        <article class="argument">
+          <strong>Systems interact in ways formulas cannot capture</strong>
+          <p>Priority rules, shared staff, blocking, and starvation produce effects that only emerge when you model the system event by event.</p>
+        </article>
+      </div>
+      <div class="comparison">
+        <div class="chart-header">
+          <div>
+            <h3>Formula vs simulation</h3>
+            <span>Mean waiting time by utilisation</span>
+          </div>
+          <span>Single server illustration</span>
+        </div>
+        <div class="chart-columns">
+          <div class="chart-col">
+            <div class="chart-value">3.5m</div>
+            <div class="bars"><div class="bar bar-formula" style="height:14%"></div><div class="bar bar-sim" style="height:16%"></div></div>
+            <div class="chart-axis">50%</div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-value">6.5m</div>
+            <div class="bars"><div class="bar bar-formula" style="height:24%"></div><div class="bar bar-sim" style="height:30%"></div></div>
+            <div class="chart-axis">65%</div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-value">13m</div>
+            <div class="bars"><div class="bar bar-formula" style="height:40%"></div><div class="bar bar-sim" style="height:52%"></div></div>
+            <div class="chart-axis">80%</div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-value">41m</div>
+            <div class="bars"><div class="bar bar-formula" style="height:58%"></div><div class="bar bar-sim" style="height:80%"></div></div>
+            <div class="chart-axis">90%</div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-value">190m</div>
+            <div class="bars"><div class="bar bar-formula" style="height:70%"></div><div class="bar bar-sim" style="height:100%"></div></div>
+            <div class="chart-axis">95%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="workflow">
+    <div class="section-head">
+      <div>
+        <div class="section-kicker">How it works</div>
+        <h2>Build, run, interpret. In one place.</h2>
+      </div>
+      <p>The product story is strongest when it feels like a workflow, not a pile of features. The site should make the path obvious: define the system, run experiments, then understand what the outputs actually mean.</p>
+    </div>
+    <div class="workflow">
+      <article class="workflow-card">
+        <div class="workflow-number">01</div>
+        <h3>Build the model</h3>
+        <p>Use structured editors, a visual canvas, or plain-English prompts and let DES generate a starting model quickly.</p>
+        <div class="workflow-tags"><span>AI Model Builder</span><span>Visual Designer</span><span>Structured editors</span></div>
+      </article>
+      <article class="workflow-card">
+        <div class="workflow-number">02</div>
+        <h3>Run serious experiments</h3>
+        <p>Move beyond toy calculations with replications, warm-up handling, and browser-based execution across available cores.</p>
+        <div class="workflow-tags"><span>Replications</span><span>Warm-up removal</span><span>Parallel workers</span></div>
+      </article>
+      <article class="workflow-card">
+        <div class="workflow-number">03</div>
+        <h3>Interpret the results</h3>
+        <p>Turn outputs into decisions with confidence intervals, comparison views, and DES reading your results to produce narrative interpretation.</p>
+        <div class="workflow-tags"><span>Confidence intervals</span><span>Comparisons</span><span>AI insights</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="example">
+    <div class="section-head">
+      <div>
+        <div class="section-kicker">Worked example</div>
+        <h2>A&amp;E triage, modelled in 20 minutes.</h2>
+      </div>
+      <p>This should be the centrepiece of the page. It shows what simulation is for, why the product matters, and where AI interpretation helps the most. It moves the product from abstract promise into a concrete decision-support tool.</p>
+    </div>
+    <div class="case-study">
+      <div class="case-copy">
+        <div class="section-kicker">Scenario</div>
+        <p>An emergency department receives patients at an average rate of 12 per hour. High-acuity patients route to a priority queue. Low-acuity patients join a secondary queue. Three clinicians are shared across both streams.</p>
+        <p>An Erlang-C approximation can produce one average wait estimate, but it cannot tell you how that wait splits between patient groups or what happens to uncertainty as the system approaches capacity.</p>
+        <p>After 30 replications with warm-up removal, the model reveals a large gap in experience between patient groups and points directly to the structural trade-off driving that result.</p>
+      </div>
+      <div class="case-panel">
+        <div class="result-panel">
+          <div class="result-top">
+            <div class="window-dot" style="background:#ff5f57"></div>
+            <div class="window-dot" style="background:#ffbd2e"></div>
+            <div class="window-dot" style="background:#28ca41"></div>
+            <div class="result-title">Run results</div>
+          </div>
+          <div class="result-body">
+            <div class="result-row"><span>High-acuity mean wait</span><strong>4.2 min (CI: 3.4-5.0)</strong></div>
+            <div class="result-row"><span>Low-acuity mean wait</span><strong>22.5 min (CI: 16.3-28.8)</strong></div>
+            <div class="result-row"><span>Clinician utilisation</span><strong>85.8% (CI: 81.8%-89.7%)</strong></div>
+            <div class="result-row"><span>Warm-up excluded</span><strong>First 60 min</strong></div>
+            <div class="result-row"><span>Replications</span><strong>30</strong></div>
+          </div>
+        </div>
+        <div class="insight-band">
+          <div class="section-kicker">AI insight</div>
+          <p>Low-acuity wait variance is materially high, which means this is not just a fairness issue but a predictability issue. Explore dedicated low-acuity capacity or redesigned routing before committing to current staffing assumptions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-kicker">Decision moments</div>
+        <h2>For people facing real trade-offs.</h2>
+      </div>
+      <p>I would frame the audience less as personas and more as situations where someone needs a defensible answer: before spending money, before changing staffing, while diagnosing operational pain, or while learning the discipline properly.</p>
+    </div>
+    <div class="moments">
+      <article class="moment">
+        <strong>Before investing in capacity</strong>
+        <p>Test the decision before the spend and understand how much improvement you actually buy.</p>
+      </article>
+      <article class="moment">
+        <strong>Before changing staffing</strong>
+        <p>See how service levels and queue experiences shift when resources are shared differently.</p>
+      </article>
+      <article class="moment">
+        <strong>When waits are getting worse</strong>
+        <p>Find the structural bottleneck rather than guessing from surface symptoms alone.</p>
+      </article>
+      <article class="moment">
+        <strong>When teaching or learning simulation</strong>
+        <p>Use a browser-native environment that stays accessible without hiding the logic.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="cta" id="cta">
+    <div class="cta-card">
+      <div class="section-kicker">Get started</div>
+      <h2>Try the model before you trust the estimate.</h2>
+      <p>No install, no long setup, and no need to start with code. Open the browser, describe the system, and get to a defensible answer faster.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-primary">Open Simmodlr free</a>
+        <a href="#example" class="btn btn-secondary">Review the worked example</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>Proposal file: editorial-technical direction</div>
+      <div>Simmodlr concept landing page</div>
+    </div>
+  </footer>
+</main>
+</body>
+</html>
