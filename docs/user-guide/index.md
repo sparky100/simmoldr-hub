@@ -61,18 +61,6 @@ B handles *scheduled* triggers. C handles *state-driven* triggers. The separatio
 
 Everything else in DES Studio (priority, multi-stage routing, failures, cost tracking, loop guards) is layered on top of this pattern.
 
----
-
-**The Three-Phase Method.** DES Studio implements Pidd's Three-Phase Method, a classical approach to discrete-event simulation:
-
-| Phase | What happens |
-|-------|--------------|
-| A | The simulation clock advances to the time of the next scheduled event. |
-| B | All B-Events (Bound events) scheduled for the current clock time fire in sequence. |
-| C | All C-Events (Conditional events) are tested repeatedly until none can fire. |
-
-This structure means that B-Events handle time-scheduled actions (arrivals, service completions) while C-Events handle state-triggered actions (start a service when a server is free and a queue is non-empty). You do not need to manage the event calendar directly — DES Studio handles it.
-
 **Modelling workflow.** A typical workflow is:
 
 1. Define entity types, queues, B-Events, and C-Events in the Forms/Tabs editors (or generate a skeleton with the AI Model Generator).
@@ -108,14 +96,14 @@ Then choose a starting point from the five options presented:
 | Option | What it does | Best for |
 |--------|-------------|----------|
 | **Draw** | Opens the Visual Designer canvas with an empty model | Modellers who prefer to sketch the flow graph first |
-| **Use a template** | Opens the template browser; selecting a template creates a private copy and opens it immediately | Starting from a proven pattern (M/M/c, ER triage, call centre, etc.) — see the Templates tab for the full catalogue |
+| **Use a template** | Opens the template browser; selecting a template creates a private copy | Starting from a proven pattern (M/M/c, ER triage, call centre, etc.) |
 | **Import a file** | Opens a file picker for `.json` model files | Loading a model exported from another DES Studio instance or received as a file |
 | **Paste model** | Opens a text area to paste model JSON | Quickly importing a model shared as text (e.g. from a colleague, a Claude conversation, or an AI-generated magic link) |
-| **Describe** | Opens the AI Model Generator | Bootstrapping a model from a plain-English scenario description — the AI asks targeted follow-up questions, then generates the model structure |
+| **Describe** | Opens the AI Model Generator | Bootstrapping a model from a plain-English scenario description |
 
-All five options create a new model record owned by you. The name you entered in the dialog is always applied to the new model. Descriptions are optional but recommended — the AI reads them to contextualise suggestions.
+All five options create a new model record owned by you.
 
-> **Templates tab.** The Templates tab in the Model Library is a separate read-only catalogue. Clicking a template card there also creates a private copy and opens it immediately — it is equivalent to choosing **Use a template** from the New Model dialog.
+> **Templates tab.** The Templates tab in the Model Library is also a read-only catalogue — clicking a template there is equivalent to choosing **Use a template** from the New Model dialog.
 
 ### Three authoring modes
 
@@ -413,13 +401,13 @@ Distributions control when events occur or how long they last. The distribution 
 
 ### 6.1 Schedule distribution — importing a planned arrival file
 
-The **Schedule** distribution is designed for models where arrivals follow a known timetable rather than a statistical process (e.g. booked appointments, shift handovers, elective procedure lists). Instead of entering times by hand, you can upload a CSV file directly.
+The **Schedule** distribution is designed for models where arrivals follow a known timetable rather than a statistical process (e.g. booked appointments, shift handovers, elective procedure lists). Instead of entering times by hand, you can upload a CSV, Excel (`.xlsx`, `.xls`, `.ods`), or live REST feed.
 
-**How to import:**
+**How to import a file:**
 
 1. In the B-Event editor, set the schedule distribution to **Schedule**.
-2. Click **↑ Load plan** (top-right of the Schedule editor panel).
-3. Select a `.csv` file. A preview of the first 5 rows appears immediately — check that columns look correct before confirming.
+2. Click **↑ Load plan** — the file picker accepts `.csv`, `.xlsx`, `.xls`, and `.ods`.
+3. Select your file. A preview of the first 5 rows appears — check that columns look correct before confirming.
 4. Click **✓ Import N arrivals** to load the data.
 
 **CSV format:** The first column must be `time` (absolute simulation clock time, numeric). Additional columns become entity attributes applied to each arriving entity. A header row is detected automatically.
@@ -446,19 +434,7 @@ time
 - After import, the editor switches automatically to **Arrival attributes** mode so you can inspect or edit individual rows.
 - Optional **Jitter** (Normal or Uniform) can be added after import to introduce random variation around each planned time.
 
-### 6.1b Importing a planned arrival file from Excel (XLSX)
 
-In addition to CSV, the Schedule editor accepts Excel files (`.xlsx`, `.xls`, `.ods`).
-
-**How to import:**
-
-1. In the B-Event editor, set the schedule distribution to **Schedule**.
-2. Click **↑ Load plan** — the file picker accepts `.csv`, `.xlsx`, `.xls`, and `.ods`.
-3. Select your Excel file. DES Studio reads the first sheet by default and converts it to the same internal format as a CSV import.
-4. A preview of the first 5 rows appears — check that columns look correct before confirming.
-5. Click **✓ Import N arrivals** to load the data.
-
-**Column format** is identical to CSV (see §6.1): the first column must be `time`, and any additional columns become entity attributes. The first row is treated as a header if the first cell is not a number.
 
 ### 6.1c Importing a schedule from a live REST endpoint (scheduleFeed)
 
@@ -594,18 +570,12 @@ Open **Results → History** to list, re-open, compare, archive, or delete saved
 
 **Bulk actions:** Select runs using checkboxes (or **Select all**) to archive, unarchive, delete, or export selected runs as CSV.
 
-Select exactly two runs and click **Compare selected** to view a side-by-side KPI comparison table.
-
-### 7.6 Keyboard shortcuts
 
 | Shortcut | Action |
 |----------|--------|
 | `Ctrl+S` / `Cmd+S` | Save the current model |
 | `?` | Open the Help Assistant |
-
-Pressing `?` at any time (while focus is outside a text input) opens the Help Assistant panel with context-aware suggested questions.
-
-### 7.7 Warmup period and Welch detection
+ period and Welch detection
 
 Long-running models may start in an unrealistic empty state. The Results view applies **Welch's method** to detect the warmup period automatically: it finds the point in the cumulative mean chart where the running mean stabilises. Statistics reported in the KPI summary exclude data from before the detected warmup cutoff, giving steady-state estimates rather than transient ones.
 
@@ -701,8 +671,6 @@ The Results view (`ResultsWorkspace`) is the primary results dashboard. It conta
 ## 9. Explain Results
 
 The Explain panel lives inside **Results** and is grounded in the current run's results and the model JSON.
-
-### 9.1 Explain Results
 
 Click **Results → Explain** to receive a plain-English analysis of your simulation results. The output covers three sections:
 
