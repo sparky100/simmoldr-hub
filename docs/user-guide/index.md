@@ -4,37 +4,6 @@ Version: 1.23.0 (Sprints 1–77)
 
 ---
 
-## Version History
-
-| Version | Sprints | Summary |
-|---------|---------|---------|
-| v1.0.0 | 1–30 | Core simulation engine, Three-Phase execution, Forms/Tabs editors, Execute panel, replication runner, parametric sweep |
-| v1.1.0 | 31–33 | Preemption (PREEMPT macro), server failures/repair (FAIL/REPAIR), enhanced analytics and run comparison |
-| v1.2.0 | 34–40 | Extended distribution library, entity attribute model, BATCH/SPLIT/MATCH/UNBATCH macros, container resource pools (FILL/DRAIN), COST macro, COSEIZE macro |
-| v1.3.0 | 41–42 | Visual Designer (drag-and-drop canvas), full UI capability exposure for all model element fields |
-| v1.4.0 | 43–44 | AI Insights panel (Interpret Results, Suggest Improvements, Sensitivity Analysis, Ask a Question, Compare Runs), Execution Insights |
-| v1.5.0 | 45 | AI prompt grounding — results and model context injected into all AI analysis calls for higher-quality suggestions |
-| v1.6.0 | 46–55a | AI Apply & Re-run, Paste JSON import, accessibility (WCAG 2.1 AA), design token system, UX polish (keyboard shortcuts, toasts, DistPicker redesign), responsive layout, cost summary in Results view, god component refactoring |
-| v1.7.0 | 57 | Real-time adapter layer — live data source binding for distribution parameters |
-| v1.8.0 | 58 | Report generation — Export a professional Word (.docx) report from any completed run |
-| v1.9.0 | 62–65 | Real-world clock (epoch), planned data import (CSV/XLSX/scheduleFeed), conditional service times (`when`), actuals tracking (plan vs actual deviation) |
-| v1.10.0 | 66 | Visual Designer badges, Execute Panel UX (Animate/Speed to Setup, Export consolidation, Entity Details rename, Log guard, chart formatting) |
-| v1.11.0 | 67 | AI Assistant simplified — single "Explain Results" button merges narrative, sensitivity, and suggestions; "Run with this change" replaces "Apply & Re-run"; results update automatically after applying a suggestion |
-| v1.13.0 | 68 | Model versioning — explicit milestones, version history panel, create version dialog with notes, structural change detection, run records reference version |
-| v1.12.0 | 68 | Run History redesign — grouped action pills, More menu, replication count badge, average served per replication; Experiments vs Studies clarified; report export uses model snapshot from run record; "Save this change to model" for AI suggestions |
-| v1.14.0 | 69 | AI debugging — trace emission for every event fire, model checker for validation errors, event provenance and arbitration trace, entity inspector panel, canvas node overlays |
-| v1.15.0 | 69 | Magic-link model import — encode any model JSON as a URL; opening the link shows a pre-flight preview with validation status, then saves to your library with one click |
-| v1.16.0 | 70 | Help Assistant — in-app contextual help with suggested questions, accessible from any screen via ? button; documentation accuracy fixes (RENEGE_OLDEST macro, ServerAttr/EntityAttr distributions, SPT/EDD queue disciplines) |
-| v1.17.0 | 70 | Macro syntax corrections — fixed COMPLETE(), ASSIGN(QueueName, ServerType), RENEGE(ctx), BATCH(QueueName, N), PREEMPT(ServerType), SPLIT(EntityType, N, TargetQueue); added missing v1.14.0 version entry |
-| v1.18.0 | 71 | In-app Feedback widget and About panel — toolbar Feedback button (speech-bubble icon) opens a Supabase-backed submission form; Info button (ⓘ icon) opens the About panel showing version and contact details; Supabase `feedback` table with RLS policies for authenticated and anonymous submission |
-| v1.19.0 | 71 | Results workflow refinement — Results now groups Summary, Log, Entities, History, and Explain; run comparison moved into Results → History; saved run records retain chart/log payloads; default run names use `Model Name DD/MM/YYYY HH:mm` |
-| v1.20.0 | 73 | Schedule Manager — timetable data separated from core model. New **Schedules** tab in the model editor to view, create, edit, and delete named timetables (e.g. Weekday, Weekend, Engineering blockade). Schedule selector dropdown in the Execute panel when a model has more than one schedule. CSV export of schedule rows. Model JSON export re-inlines schedule rows for portability. |
-| v1.21.0 | 74–76 | Report redesign — Senior Management and Technical report variants in HTML and Markdown format. Improvements: entity name used in KPI labels (e.g. "Trains served" not "Entities served"); served/reneged counts shown as integers; per-stage wait and service time breakdown for multi-stage models; angled x-axis labels in queue wait chart; wrapped labels in resource utilisation chart; Scope & Methodology section (arrival pattern, warm-up, replications, performance goals); intro paragraph before results; goal status summary in executive summary. |
-| v1.22.0 | 75–76 | Model Assistant — AI panel renamed from "AI Assistant" to "Model Assistant". Now persists as a sidebar across tab navigation. Clicking **Explain Results**, **Compare Runs**, or **Refine Plan** opens a focused view showing only that action (not all three at once). On mobile devices, action buttons open a full-screen overlay. Diagnostics panel: "Diagnose with AI" renamed to **Diagnose**; section heading "AI Diagnosis" renamed to **Diagnosis**. |
-| v1.23.0 | 77 | **Results view** — Unified chart panels (all charts use the same bordered card with two-row header; long queue names wrap to two lines instead of truncating mid-word). Customers Arriving card added to the KPI summary. For multi-replication runs, Customers Arriving and Customers Served display as e.g. `11000 — 1100 per run`. Section order: Summary → Bottlenecks → Analysis → Run Effort. **Export Results** and **Create Report** buttons added after Analyse in the Results tab. **Run History** — Share link removed from the ⋯ menu. **Create Report** button added next to Explain. **View model at this run** now works correctly (model snapshot saved on every run). **Reproduce** fixed for multi-replication runs and timetable models. **Reports** — Senior Management report executive summary is always written in plain English by the AI (the technical model description field is no longer used). Queue chart labels strip verbose suffixes (e.g. shows "Cathcart Newton Neilston" not "Cathcart Newton Neilston Approach Queue"). Confidence is shown as High/Medium/Low instead of a CI table in the management report. **Validation** — V38 warning: writing `RELEASE(Server)` immediately before `COMPLETE()` in the same B-event silently skips completion; the engine now warns before the run. |
-
----
-
 ## 1. Introduction
 
 DES Studio is a browser-based discrete-event simulation tool for modellers who need to build, run, and analyse queue-based models without writing code. All model elements are configured through structured editors, a visual canvas, or an AI-assisted generator. Experiments are run directly in the browser; results appear as live animations, event logs, histograms, and statistical summaries.
