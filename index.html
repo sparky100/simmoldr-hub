@@ -853,7 +853,7 @@ footer {
 <div class="theme-switcher" aria-label="Theme switcher">
   <div class="theme-title">Style directions</div>
   <div class="theme-options">
-    <button class="theme-option active" type="button" data-theme-option="clinical">
+    <button class="theme-option" type="button" data-theme-option="clinical">
       <span class="theme-swatch">
         <span style="background:#F5F8FB"></span>
         <span style="background:#FFFFFF"></span>
@@ -862,7 +862,7 @@ footer {
       <span class="theme-name">Clinical</span>
       <span class="theme-copy">Clean, credible, calm</span>
     </button>
-    <button class="theme-option" type="button" data-theme-option="paper">
+    <button class="theme-option active" type="button" data-theme-option="paper">
       <span class="theme-swatch">
         <span style="background:#F7F3EC"></span>
         <span style="background:#FFFDF8"></span>
@@ -903,7 +903,7 @@ footer {
     localStorage.setItem(themeKey, theme);
   };
 
-  applyTheme(localStorage.getItem(themeKey) || 'clinical');
+  applyTheme(localStorage.getItem(themeKey) || 'paper');
   themeOptions.forEach(option => {
     option.addEventListener('click', () => applyTheme(option.dataset.themeOption));
   });
