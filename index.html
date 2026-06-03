@@ -221,29 +221,6 @@ nav {
   opacity: 0; animation: up 0.6s 0.5s ease forwards;
 }
 
-/* ── PROOF BAR ── */
-.proof-bar {
-  background: var(--bg-2);
-  border-top: 1px solid var(--nav-border);
-  border-bottom: 1px solid var(--nav-border);
-  padding: 2.25rem 3rem;
-}
-.proof-inner {
-  max-width: 1120px; margin: 0 auto;
-  display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 1.5rem; text-align: center;
-}
-.proof-item { position: relative; }
-.proof-item + .proof-item::before {
-  content: ''; position: absolute; left: 0; top: 15%; bottom: 15%;
-  width: 1px; background: var(--surface-border);
-}
-.proof-n {
-  font-family: var(--syne); font-size: 2.25rem; font-weight: 800;
-  color: var(--teal); line-height: 1; margin-bottom: 0.4rem;
-}
-.proof-l { font-size: 0.78rem; color: var(--mid); font-family: var(--mono); }
-
 /* ── GENERIC SECTION ── */
 section { padding: 6rem 3rem; position: relative; }
 .section-inner { max-width: 1120px; margin: 0 auto; }
@@ -265,7 +242,7 @@ section { padding: 6rem 3rem; position: relative; }
 }
 
 /* ── PROBLEM ── */
-.problem { background: var(--bg); }
+.problem { background: var(--bg-2); }
 .problem-split {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 5rem; align-items: center; margin-top: 4rem;
@@ -284,7 +261,7 @@ section { padding: 6rem 3rem; position: relative; }
 
 /* chart */
 .chart-wrap {
-  background: var(--bg-2); border: 1px solid var(--surface-border);
+  background: var(--bg); border: 1px solid var(--surface-border);
   border-radius: 12px; padding: 1.75rem; overflow: hidden;
   box-shadow: var(--shadow-soft);
 }
@@ -316,12 +293,12 @@ section { padding: 6rem 3rem; position: relative; }
 .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
 
 /* ── HOW ── */
-.how { background: var(--bg-2); }
+.how { background: var(--bg); }
 .steps {
   display: grid; grid-template-columns: repeat(3,1fr);
   gap: 2px; margin-top: 3.5rem; border-radius: 10px; overflow: hidden;
 }
-.step { background: var(--bg); padding: 2.25rem 1.875rem; position: relative; }
+.step { background: var(--bg-2); padding: 2.25rem 1.875rem; position: relative; }
 .step-n {
   font-family: var(--syne); font-size: 3rem; font-weight: 800;
   color: var(--teal-faint); line-height: 1;
@@ -341,9 +318,9 @@ section { padding: 6rem 3rem; position: relative; }
 }
 
 /* ── FEATURES ── */
-.features { background: var(--bg); }
+.features { background: var(--bg-2); }
 .feat-grid {
-  display: grid; grid-template-columns: repeat(2,1fr);
+  display: grid; grid-template-columns: repeat(3,1fr);
   gap: 1.25rem; margin-top: 3.5rem;
 }
 .feat-card {
@@ -368,7 +345,7 @@ section { padding: 6rem 3rem; position: relative; }
 }
 
 /* ── SCENARIO ── */
-.scenario { background: var(--bg-2); }
+.scenario { background: var(--bg); }
 .scenario-p { font-size: 1rem; color: var(--mid); line-height: 1.82; font-weight: 300; margin-bottom: 1.125rem; }
 .scenario-p strong { color: var(--white); font-weight: 500; }
 .scenario-proof {
@@ -382,6 +359,12 @@ section { padding: 6rem 3rem; position: relative; }
   border: 1px solid var(--surface-line);
   border-radius: 10px;
   padding: 1rem;
+}
+.scenario-stat-icon {
+  display: block;
+  font-size: 1.2rem;
+  line-height: 1;
+  margin-bottom: 0.6rem;
 }
 .scenario-stat strong {
   display: block;
@@ -445,7 +428,7 @@ section { padding: 6rem 3rem; position: relative; }
 .shot-caption { font-size: 0.8125rem; color: var(--mid); line-height: 1.62; }
 
 /* ── AUDIENCES ── */
-.audiences { background: var(--bg); }
+.audiences { background: var(--bg-2); }
 .aud-grid {
   display: grid; grid-template-columns: repeat(3,1fr);
   gap: 1.25rem; margin-top: 3.5rem;
@@ -464,7 +447,7 @@ section { padding: 6rem 3rem; position: relative; }
 
 /* ── CTA ── */
 .cta {
-  background: var(--bg-2);
+  background: var(--bg);
   border-top: 1px solid var(--nav-border);
   text-align: center; padding: 7rem 3rem; position: relative; overflow: hidden;
 }
@@ -510,7 +493,6 @@ footer {
 @media(max-width:900px){
   nav{padding:1rem 1.5rem;} .nav-links{display:none;}
   section{padding:4rem 1.5rem;} .hero{padding:7rem 1.5rem 4rem;}
-  .proof-bar{padding:1.75rem 1.5rem;} .proof-inner{grid-template-columns:repeat(2,1fr);}
   .problem-split{grid-template-columns:1fr;gap:3rem;}
   .scenario-proof{grid-template-columns:repeat(2,1fr);}
   .scenario-showcase{grid-template-columns:1fr;}
@@ -556,24 +538,6 @@ footer {
     <p class="hero-note">No install · Runs entirely in your browser · simmodlr.app</p>
   </div>
 </section>
-
-<!-- PROOF BAR -->
-<div class="proof-bar">
-  <div class="proof-inner">
-    <div class="proof-item">
-      <div class="proof-n">1,992</div>
-      <div class="proof-l">Passing tests across the codebase</div>
-    </div>
-    <div class="proof-item">
-      <div class="proof-n">95%</div>
-      <div class="proof-l">Clear ranges around your results</div>
-    </div>
-    <div class="proof-item">
-      <div class="proof-n">±2%</div>
-      <div class="proof-l">Analytical accuracy tolerance</div>
-    </div>
-  </div>
-</div>
 
 <!-- PROBLEM -->
 <section class="problem" id="problem">
@@ -693,13 +657,13 @@ footer {
 <section class="features" id="features">
   <div class="section-inner">
     <div class="section-tag">Capabilities</div>
-    <h2 class="section-h2">Design. Run. Analyse.</h2>
-    <p class="section-body">Three stages, fully integrated. Build your model, run the experiment, understand the results — all in one place, all in your browser.</p>
+    <h2 class="section-h2">Design. Run. Analyse. Change.</h2>
+    <p class="section-body">Build the model, watch it run, understand the results, then test the change — all in one browser workflow.</p>
     <div class="feat-grid reveal">
       <div class="feat-card primary" style="grid-column: 1 / -1;">
         <span class="feat-icon">✏️</span>
         <h3 class="feat-title">Design — three ways to build your model</h3>
-        <p class="feat-body">Describe your system in plain English and let Simmodlr build a starting model for you, then adjust it on the canvas or in the editors. No modelling experience is needed to get started, and there is no coding required.</p>
+        <p class="feat-body">Describe the system in plain English, then review and adjust the model on the canvas or in the editors.</p>
         <div class="feat-detail" style="display:flex; gap: 2.5rem; flex-wrap: wrap; margin-top: 1rem;">
           <div>
             <div style="color: var(--teal); font-weight: 600; margin-bottom: 0.3rem;">Describe</div>
@@ -723,14 +687,20 @@ footer {
       <div class="feat-card">
         <span class="feat-icon">▶️</span>
         <h3 class="feat-title">Run — robust experiments</h3>
-        <p class="feat-body">Run one simulation or several repeats to see how the system behaves. The results are built to be dependable, not just plausible.</p>
-        <div class="feat-detail">Repeat runs for reassurance<br>Ignore the early settling period<br>Try different setups side by side</div>
+        <p class="feat-body">Watch queues form, resources become busy, and entities move through the process.</p>
+        <div class="feat-detail">Live flow on the canvas<br>Queues, completions and utilisation<br>Visible behaviour before conclusions</div>
       </div>
       <div class="feat-card">
         <span class="feat-icon">📊</span>
-        <h3 class="feat-title">Analyse — results that speak plainly</h3>
-        <p class="feat-body">See more than averages. Simmodlr reads your results and explains what is working, what is not, and what you could try next.</p>
-        <div class="feat-detail">Clear ranges around each measure<br>Plain-English explanation<br>Compare runs and test changes</div>
+        <h3 class="feat-title">Analyse — confidence in the results</h3>
+        <p class="feat-body">Explore builds confidence in the results and highlights what needs attention.</p>
+        <div class="feat-detail">Confidence target checking<br>Plain-English explanation<br>Pressure points highlighted</div>
+      </div>
+      <div class="feat-card">
+        <span class="feat-icon">🔁</span>
+        <h3 class="feat-title">Change — test improvements safely</h3>
+        <p class="feat-body">Test a proposed change, compare the result, then save what works.</p>
+        <div class="feat-detail">Temporary model changes<br>Before-and-after comparison<br>Save only what works</div>
       </div>
     </div>
   </div>
@@ -742,25 +712,25 @@ footer {
     <div class="section-tag">Worked example</div>
     <h2 class="section-h2">A&amp;E triage, from prompt to tested change in minutes.</h2>
     <div class="scenario-intro reveal">
-      <p class="scenario-p">The brief is written in plain English: patients arrive roughly every 10 minutes, one route leaves after triage, and the rest join a priority doctor queue. Simmodlr turns that description into a working emergency-department model with arrivals, queues, activities, resources, and exits ready to review.</p>
-      <p class="scenario-p">From there the model can be run, changed, and analysed. The assistant spots the doctor-capacity constraint, proposes moving doctors from <strong>3 to 4</strong>, and runs the comparison before the change is saved back to the model.</p>
+      <p class="scenario-p">A plain-English brief becomes a working emergency-department model: arrivals, triage, queues, doctors, and exits.</p>
+      <p class="scenario-p">Then Simmodlr runs it, analyses the results, recommends a doctor-capacity change, and tests it before anything is saved.</p>
     </div>
 
     <div class="scenario-proof reveal">
-      <div class="scenario-stat"><strong>Design</strong><span>Describe the system and review the proposed model</span></div>
-      <div class="scenario-stat"><strong>Run</strong><span>Execute the pathway and watch the model behave</span></div>
-      <div class="scenario-stat"><strong>Analyse</strong><span>Use replicated results to understand the pressure points</span></div>
-      <div class="scenario-stat"><strong>Change</strong><span>Test the improvement before saving it to the model</span></div>
+      <div class="scenario-stat"><span class="scenario-stat-icon">✏️</span><strong>Design</strong><span>Describe the system and review the proposed model</span></div>
+      <div class="scenario-stat"><span class="scenario-stat-icon">▶️</span><strong>Run</strong><span>Execute the pathway and watch the model behave</span></div>
+      <div class="scenario-stat"><span class="scenario-stat-icon">📊</span><strong>Analyse</strong><span>Build confidence and understand the pressure points</span></div>
+      <div class="scenario-stat"><span class="scenario-stat-icon">🔁</span><strong>Change</strong><span>Test the improvement before saving it to the model</span></div>
     </div>
 
     <div class="scenario-showcase">
       <div class="shot-item reveal d1">
         <div class="shot-step">01 — Design</div>
-        <div class="shot-title">AI drafts the model from the brief</div>
+        <div class="shot-title">Simmodlr drafts the model from the brief</div>
         <div class="shot-frame proposal-frame">
           <img src="images/Proposed Model.png" alt="Model proposal describing emergency department triage with arrivals, triage queue, doctor priority queue, resources, and exits" loading="lazy">
         </div>
-        <p class="shot-caption">The proposal is readable before it is saved: who arrives, how they flow, which queues and resources are used, and what the model is intended to simulate.</p>
+        <p class="shot-caption">Review the proposed flow before saving it to the model library.</p>
       </div>
 
       <div class="shot-item reveal d2">
@@ -769,16 +739,16 @@ footer {
         <div class="shot-frame run-frame">
           <img src="images/Run.png" alt="Running model canvas showing patient arrivals, triage queue, doctor queue, exit, doctor consultation complete, utilisation, throughput, and waiting counts" loading="lazy">
         </div>
-        <p class="shot-caption">The model is not a static diagram. During execution the canvas shows queues, completions, utilisation, throughput, and mean sojourn time as the patient flow unfolds.</p>
+        <p class="shot-caption">Seeing the model run makes the process visible: queues, movement, resource use, and flow.</p>
       </div>
 
       <div class="shot-item primary reveal d3">
         <div class="shot-step">03 — Analyse</div>
-        <div class="shot-title">Explore turns replications into evidence</div>
+        <div class="shot-title">Explore provides confidence in the results</div>
         <div class="shot-frame explore-frame">
           <img src="images/Screenshot 2026-06-03 061616.png" alt="Explore results summary showing confidence achieved with 45 replications, average wait, time in system, arrivals, served patients, and no early leavers" loading="lazy">
         </div>
-        <p class="shot-caption">Explore keeps running batches until the confidence target is met, then summarises the system in plain numbers: waits, time in system, arrivals, served patients, and whether anyone left before service.</p>
+        <p class="shot-caption">Explore builds confidence, summarises the results, and recommends what to change next.</p>
       </div>
 
       <div class="shot-item reveal d4">
@@ -787,7 +757,7 @@ footer {
         <div class="shot-frame compare-frame">
           <img src="images/Comapre.png" alt="Analyse and compare panel showing doctor bottleneck, proposed doctor capacity change from 3 to 4, and before-after performance metrics" loading="lazy">
         </div>
-        <p class="shot-caption">The assistant identifies the doctor bottleneck, runs a temporary copy with one extra doctor, and shows the before-and-after effect before the user commits the change.</p>
+        <p class="shot-caption">Test the recommendation, compare the result, and save it when it works.</p>
       </div>
     </div>
   </div>
@@ -825,11 +795,10 @@ footer {
   <div style="position:relative">
     <div class="section-tag" style="justify-content:center">Get started</div>
     <h2 class="section-h2">Ready to trust your analysis?</h2>
-    <p class="section-body">No account needed to explore. Sign up free to save models and run replicated experiments.</p>
+    <p class="section-body">Sign up to explore.</p>
     <div class="cta-btns">
       <a href="https://des.simmodlr.app/" class="btn-primary">Open Simmodlr →</a>
     </div>
-    <p class="cta-note">No credit card · Browser-native · simmodlr.app</p>
   </div>
 </section>
 
@@ -840,7 +809,6 @@ footer {
     <ul class="footer-links">
       <li><a href="#how">How it works</a></li>
       <li><a href="#features">Capabilities</a></li>
-      <li><a href="https://sparky100.github.io/simmoldr-hub/user-guide/">User Guide</a></li>
       <li><a href="#">Contact</a></li>
     </ul>
     <div class="footer-copy">© 2026 Simmodlr · simmodlr.app</div>
