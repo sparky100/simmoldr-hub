@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simmodlr — Discrete-Event Simulation in Your Browser</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -426,43 +427,6 @@ section { padding: 6rem 3rem; position: relative; }
 .shot-frame.explore-frame img,
 .shot-frame.compare-frame img { object-position: top center; }
 .shot-caption { font-size: 0.8125rem; color: var(--mid); line-height: 1.62; }
-.complex-proof {
-  margin-top: 1.25rem;
-  background: var(--bg);
-  border: 1px solid var(--surface-line);
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: var(--shadow-soft);
-}
-.complex-frame {
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid var(--surface-border);
-  background: var(--bg-3);
-  aspect-ratio: 4 / 1;
-}
-.complex-frame img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-.complex-copy {
-  display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: 1.25rem;
-  margin-top: 1rem;
-  align-items: start;
-}
-.complex-title {
-  font-family: var(--syne);
-  font-size: 1.0625rem;
-  font-weight: 700;
-  color: var(--white);
-}
-.complex-body { font-size: 0.8125rem; color: var(--mid); line-height: 1.62; }
-
 /* ── AUDIENCES ── */
 .audiences { background: var(--bg-2); }
 .aud-grid {
@@ -532,7 +496,6 @@ footer {
   .problem-split{grid-template-columns:1fr;gap:3rem;}
   .scenario-proof{grid-template-columns:repeat(2,1fr);}
   .scenario-showcase{grid-template-columns:1fr;}
-  .complex-copy{grid-template-columns:1fr;}
   .open-grid,.feat-grid,.aud-grid{grid-template-columns:1fr;}
   .footer-inner{flex-direction:column;text-align:center;} .footer-links{justify-content:center;}
 }
@@ -544,7 +507,6 @@ footer {
     letter-spacing:0;
     padding-right:0.08em;
   }
-  .complex-frame{aspect-ratio:16 / 9;}
   .scenario-proof{grid-template-columns:1fr;}
 }
 </style>
@@ -785,16 +747,6 @@ footer {
           <img src="images/Comapre.png" alt="Analyse and compare panel showing doctor bottleneck, proposed doctor capacity change from 3 to 4, and before-after performance metrics" loading="lazy">
         </div>
         <p class="shot-caption">Test the recommendation, compare the result, and save it when it works.</p>
-      </div>
-    </div>
-
-    <div class="complex-proof reveal">
-      <div class="complex-frame">
-        <img src="images/Complex.png" alt="Large Simmodlr model organised into coloured sections with many connected queues, activities, resources, routes, and handoffs" loading="lazy">
-      </div>
-      <div class="complex-copy">
-        <div class="complex-title">Simple to start. Built for real systems.</div>
-        <p class="complex-body">The triage example is easy to follow, but the same canvas can hold larger pathways too. Sections help organise complex models with branching routes, shared resources, priorities, and handoffs across a whole service.</p>
       </div>
     </div>
   </div>
