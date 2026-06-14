@@ -104,7 +104,7 @@ body[data-theme="black"] {
   --shadow-soft: 0 20px 60px rgba(0,0,0,0.45);
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   background: var(--bg);
   color: var(--white);
@@ -126,7 +126,7 @@ nav {
 .nav-brand {
   font-family: var(--syne); font-size: 1.3rem; font-weight: 800;
   color: var(--white); text-decoration: none; letter-spacing: -0.02em;
-  white-space: nowrap; flex-shrink: 0;
+  flex-shrink: 0;
 }
 .nav-brand span { color: var(--teal); }
 .nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
