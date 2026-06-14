@@ -224,8 +224,8 @@ nav {
 }
 
 /* ── GENERIC SECTION ── */
-section { padding: 6rem 3rem; position: relative; }
-.section-inner { max-width: 1120px; margin: 0 auto; }
+section { padding: 6rem 3rem; position: relative; overflow: hidden; }
+.section-inner { max-width: 1120px; margin: 0 auto; width: 100%; }
 .section-tag {
   font-family: var(--mono); font-size: 0.67rem; color: var(--teal);
   letter-spacing: 0.14em; text-transform: uppercase;
@@ -246,7 +246,7 @@ section { padding: 6rem 3rem; position: relative; }
 /* ── PROBLEM ── */
 .problem { background: var(--bg-2); }
 .problem-split {
-  display: grid; grid-template-columns: 1fr 1fr;
+  display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr);
   gap: 5rem; align-items: center; margin-top: 4rem;
 }
 .problem-points { list-style: none; display: flex; flex-direction: column; gap: 1.75rem; }
@@ -297,7 +297,7 @@ section { padding: 6rem 3rem; position: relative; }
 /* ── OPEN WORKFLOW ── */
 .how { background: var(--bg); }
 .open-grid {
-  display: grid; grid-template-columns: repeat(3,1fr);
+  display: grid; grid-template-columns: repeat(3,minmax(0,1fr));
   gap: 1.25rem; margin-top: 3.5rem;
 }
 .open-card {
@@ -322,7 +322,7 @@ section { padding: 6rem 3rem; position: relative; }
 /* ── FEATURES ── */
 .features { background: var(--bg-2); }
 .feat-grid {
-  display: grid; grid-template-columns: repeat(3,1fr);
+  display: grid; grid-template-columns: repeat(3,minmax(0,1fr));
   gap: 1.25rem; margin-top: 3.5rem;
 }
 .feat-card {
@@ -467,7 +467,7 @@ section { padding: 6rem 3rem; position: relative; }
 /* ── AUDIENCES ── */
 .audiences { background: var(--bg-2); }
 .aud-grid {
-  display: grid; grid-template-columns: repeat(3,1fr);
+  display: grid; grid-template-columns: repeat(3,minmax(0,1fr));
   gap: 1.25rem; margin-top: 3.5rem;
 }
 .aud-card {
