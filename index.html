@@ -535,6 +535,7 @@ footer {
   .scenario-showcase{grid-template-columns:1fr;}
   .complex-copy{grid-template-columns:1fr;}
   .open-grid,.feat-grid,.aud-grid{grid-template-columns:1fr;}
+  .feat-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
   .footer-inner{flex-direction:column;text-align:center;} .footer-links{justify-content:center;}
 }
 @media(max-width:560px){
@@ -692,7 +693,7 @@ footer {
         <span class="feat-icon">✏️</span>
         <h3 class="feat-title">Design — four ways to build your model</h3>
         <p class="feat-body">Describe the system in plain English, draw it on the canvas, edit the forms directly — or bring a model built outside simmodlr and import it.</p>
-        <div class="feat-detail" style="display:flex; gap: 2.5rem; flex-wrap: wrap; margin-top: 1rem;">
+        <div class="feat-detail feat-detail-grid" style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap: 2rem; margin-top: 1rem;">
           <div>
             <div style="color: var(--teal); font-weight: 600; margin-bottom: 0.3rem;">Describe</div>
             Describe your process in plain English<br>
@@ -711,7 +712,7 @@ footer {
             Define entities, events, and queues
           </div>
           <div>
-            <div style="color: var(--teal); font-weight: 600; margin-bottom: 0.3rem;">Import from AI</div>
+            <div style="color: var(--teal); font-weight: 600; margin-bottom: 0.3rem;">Use an AI Chat tool</div>
             Share the simmodlr schema with any AI chat tool<br>
             Ask it to build the model for you<br>
             Import the result directly into simmodlr
