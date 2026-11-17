@@ -9,6 +9,7 @@ simmodlr is a family of apps. The site has one family landing page and one page 
 | `index.html` | Family landing page at simmodlr.app: introduces simmodlr and lists the apps. |
 | `flow/index.html` | Flow's page at simmodlr.app/flow/. The app itself runs at https://flow.simmodlr.app/. |
 | `flow/images/` | Images used only by the Flow page. |
+| `atlas/index.html` | Atlas's page at simmodlr.app/atlas/. The app runs at https://atlas.simmodlr.app/. Draft: screenshots and contact details still to add, so it stays `noindex`. |
 | `assets/site.css` | Shared styles (themes, nav, footer, sections, app cards, FAQ). Every page uses it. |
 | `assets/site.js` | Shared behaviour (theme, scroll reveal, chart animation). |
 | `templates/app-page.html` | Starting point for a new app page: hero, features, example, FAQ, CTA. |
