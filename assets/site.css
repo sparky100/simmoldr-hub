@@ -614,3 +614,7 @@ footer .draft-flag { display: block; width: fit-content; margin: 0.75rem auto 0;
 .complex-frame.loop-results-frame { aspect-ratio: 2464 / 530; margin-top: 0.75rem; background: #fff; }
 .shot-frame.loop-inspector-frame { aspect-ratio: 1400 / 850; }
 .complex-proof + .complex-proof { margin-top: 1.25rem; }
+
+/* Atlas page: wide app screenshots fill the frame from the top-left; small ones sit centred */
+.shot-frame.photo-frame img { object-fit: cover; object-position: top left; }
+.shot-frame.photo-frame.fit-frame img { object-fit: contain; object-position: center; }
