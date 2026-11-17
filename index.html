@@ -4,23 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>simmodlr — A family of modelling apps</title>
-<meta name="description" content="simmodlr is a family of browser-based modelling apps: Flow for discrete-event simulation, Loop for system dynamics, and Atlas for enterprise architecture.">
+<meta name="description" content="simmodlr is a family of browser-based modelling apps: Atlas for enterprise architecture, Flow for discrete-event simulation and Loop for system dynamics, with Lens for collaborative sensemaking on the way.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
 
-<!-- NAV (shared: keep in step with /flow and templates/app-page.html) -->
+<!-- NAV (shared: keep in step with the app pages and templates/app-page.html).
+     Apps are listed alphabetically and treated as equals: no app gets the nav button. -->
 <nav>
   <a href="/" class="nav-brand">simmodlr<span>.</span></a>
   <ul class="nav-links">
-    <li><a href="#apps">Apps</a></li>
     <li><a href="#approach">Approach</a></li>
+    <li><a href="/atlas/">Atlas</a></li>
     <li><a href="/flow/">Flow</a></li>
     <li><a href="/loop/">Loop</a></li>
-    <li><a href="/atlas/">Atlas</a></li>
-    <li><a href="https://flow.simmodlr.app/" class="nav-btn">Try Flow →</a></li>
+    <li><a href="#apps" class="nav-btn">See the apps →</a></li>
   </ul>
 </nav>
 
@@ -32,40 +32,27 @@
     <div class="hero-badge"><div class="badge-pulse"></div>A family of modelling apps</div>
     <h1 class="hero-h1">Model the system.<br><span class="teal">Then decide.</span></h1>
     <p class="hero-sub">
-      simmodlr builds browser-based modelling apps for people who need
-      honest answers about how a system behaves. Each app is focused on
-      one way of modelling, and they share one approach: no install,
-      no black box, results you can rely on.
+      simmodlr is a family of browser-based modelling apps for people who
+      need honest answers about how a system behaves. Each app is built
+      around a different kind of modelling question, and they all share
+      one approach: no install, no black box, results you can rely on.
     </p>
     <div class="hero-ctas">
       <a href="#apps" class="btn-primary">See the apps →</a>
-      <a href="/flow/" class="btn-ghost">Meet Flow</a>
+      <a href="#approach" class="btn-ghost">The approach</a>
     </div>
     <p class="hero-note">No install · Runs in your browser · simmodlr.app</p>
   </div>
 </section>
 
-<!-- APPS (add one card per app; each links to /<app>/) -->
+<!-- APPS (one card per app, alphabetical, all the same size and style; each links to /<app>/).
+     An app with no page yet uses the "soon" card. -->
 <section class="apps" id="apps">
   <div class="section-inner">
     <div class="section-tag">The apps</div>
     <h2 class="section-h2">One family. Each app does one thing well.</h2>
     <p class="section-body">Every app has its own page here and runs on its own address, so you can go straight to the one you need.</p>
     <div class="app-grid reveal">
-      <a href="/flow/" class="app-card">
-        <span class="app-status">Live</span>
-        <span class="app-name">Flow</span>
-        <span class="app-kind">Discrete-event simulation</span>
-        <p class="app-body">Model queues, resources and service processes. Describe or draw the system, watch it run, find the bottleneck and test the change before you commit to it.</p>
-        <span class="app-links">Learn more → · flow.simmodlr.app</span>
-      </a>
-      <a href="/loop/" class="app-card">
-        <span class="app-status">Live</span>
-        <span class="app-name">Loop</span>
-        <span class="app-kind">System dynamics</span>
-        <p class="app-body">Model stocks, flows and feedback. Draft a model from a description, see which loop drives the behaviour, and share it as a simulator anyone can use.</p>
-        <span class="app-links">Learn more → · loop.simmodlr.app</span>
-      </a>
       <a href="/atlas/" class="app-card">
         <span class="app-status">Early testers</span>
         <span class="app-name">Atlas</span>
@@ -73,13 +60,29 @@
         <p class="app-body">Keep what your organisation does, the systems behind it and how they connect in one model. Every picture is drawn from it, so they never disagree.</p>
         <span class="app-links">Learn more → · atlas.simmodlr.app</span>
       </a>
+      <a href="/flow/" class="app-card">
+        <span class="app-status">Live</span>
+        <span class="app-name">Flow</span>
+        <span class="app-kind">Discrete-event simulation</span>
+        <p class="app-body">Model queues, resources and service processes. Describe or draw the system, watch it run, find the bottleneck and test the change before you commit to it.</p>
+        <span class="app-links">Learn more → · flow.simmodlr.app</span>
+      </a>
       <div class="app-card soon">
-        <span class="app-status">Coming next</span>
-        <span class="app-name">More apps</span>
-        <span class="app-kind">On the way</span>
-        <p class="app-body">Further apps will join Flow, Loop and Atlas, each built around a different kind of modelling question and sharing the same open, browser-based approach.</p>
+        <span class="app-status">Coming soon</span>
+        <span class="app-name">Lens</span>
+        <span class="app-kind">Collaborative sensemaking</span>
+        <p class="app-body">Turn a workshop's sticky notes, interviews and meeting notes into one shared map of concerns, goals, evidence and actions, with disagreement kept visible rather than smoothed over.</p>
+        <span class="app-links">Page coming soon</span>
       </div>
+      <a href="/loop/" class="app-card">
+        <span class="app-status">Live</span>
+        <span class="app-name">Loop</span>
+        <span class="app-kind">System dynamics</span>
+        <p class="app-body">Model stocks, flows and feedback. Draft a model from a description, see which loop drives the behaviour, and share it as a simulator anyone can use.</p>
+        <span class="app-links">Learn more → · loop.simmodlr.app</span>
+      </a>
     </div>
+    <p class="section-body app-more">More apps will join the family over time, each built around a different kind of modelling question.</p>
   </div>
 </section>
 
@@ -110,11 +113,12 @@
   <div class="cta-glow"></div>
   <div style="position:relative">
     <div class="section-tag" style="justify-content:center">Get started</div>
-    <h2 class="section-h2">Start with Flow.</h2>
-    <p class="section-body">The first simmodlr app is live now.</p>
+    <h2 class="section-h2">Pick the app that fits your question.</h2>
+    <p class="section-body">Each app runs on its own address. Open the one you need.</p>
     <div class="cta-btns">
-      <a href="https://flow.simmodlr.app/" class="btn-primary">Open Flow →</a>
-      <a href="/flow/" class="btn-ghost">Read about Flow</a>
+      <a href="https://atlas.simmodlr.app/" class="btn-ghost">Open Atlas →</a>
+      <a href="https://flow.simmodlr.app/" class="btn-ghost">Open Flow →</a>
+      <a href="https://loop.simmodlr.app/" class="btn-ghost">Open Loop →</a>
     </div>
   </div>
 </section>
@@ -124,9 +128,9 @@
   <div class="footer-inner">
     <a href="/" class="footer-brand">simmodlr<span>.</span></a>
     <ul class="footer-links">
+      <li><a href="/atlas/">Atlas</a></li>
       <li><a href="/flow/">Flow</a></li>
       <li><a href="/loop/">Loop</a></li>
-      <li><a href="/atlas/">Atlas</a></li>
       <li><a href="/#apps">All apps</a></li>
       <li><a href="#">Contact</a></li>
     </ul>
