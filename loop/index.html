@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Loop by simmodlr — System Dynamics in Your Browser</title>
+<meta name="description" content="Loop is a browser-based system dynamics tool. Build stock-and-flow models from a description or on the canvas, run them, see which feedback loop drives the behaviour, and share the result as a public simulator.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<!-- NAV (shared: brand links to the family page) -->
+<nav>
+  <a href="/" class="nav-brand">simmodlr<span>.</span><span class="nav-app">Loop</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">Open workflow</a></li>
+    <li><a href="#features">Capabilities</a></li>
+    <li><a href="#example">Example</a></li>
+    <li><a href="#share">Share</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="https://loop.simmodlr.app/" class="nav-btn">Try Loop →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><div class="badge-pulse"></div>Loop by simmodlr — system dynamics</div>
+    <h1 class="hero-h1">Find the loop.<br><span class="teal">Then decide.</span></h1>
+    <p class="hero-sub">
+      Loop is a browser-based system dynamics tool. Model the things that
+      build up and drain away, the rates between them and the feedback that
+      connects them. Run it, find the loop that is driving the result, and
+      share what you found as a simulator anyone can use.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://loop.simmodlr.app/" class="btn-primary">Start modelling →</a>
+      <a href="#example" class="btn-ghost">See a worked example</a>
+    </div>
+    <p class="hero-note">No install · Simulations run in your browser · loop.simmodlr.app</p>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="section-inner">
+    <div class="section-tag">The problem</div>
+    <h2 class="section-h2">Feedback doesn't fit in a spreadsheet.</h2>
+    <p class="section-body">Customers, cash, staff, stock, infections: each one builds up over time and changes the rate at which it changes. A row of formulas can describe one step. It can't easily show you what the loop does over years.</p>
+    <ul class="problem-points reveal" style="margin:2.5rem 0">
+      <li class="problem-point">
+        <div class="pp-icon">🛢️</div>
+        <div>
+          <div class="pp-title">Things accumulate</div>
+          <p class="pp-body">A stock carries its history with it. Today's backlog is every order that came in minus every order that went out, so the past keeps shaping the present.</p>
+        </div>
+      </li>
+      <li class="problem-point">
+        <div class="pp-icon">🔁</div>
+        <div>
+          <div class="pp-title">Loops push and pull</div>
+          <p class="pp-body">Reinforcing loops drive growth and collapse. Balancing loops hold things steady. Which one is in charge can change part way through, and that is usually where the surprise is.</p>
+        </div>
+      </li>
+      <li class="problem-point">
+        <div class="pp-icon">⏳</div>
+        <div>
+          <div class="pp-title">Delays mislead</div>
+          <p class="pp-body">When the effect of a decision arrives months later, people over-correct. Delays are built into Loop, so you can see the overshoot before it happens.</p>
+        </div>
+      </li>
+    </ul>
+    <p class="section-body">And if your question doesn't really involve feedback, Loop will tell you. Its <strong>Loop or Excel?</strong> check reads the model's equations and says whether a spreadsheet would do the job, and why.</p>
+  </div>
+</section>
+
+<!-- OPEN WORKFLOW -->
+<section class="how" id="how">
+  <div class="section-inner">
+    <div class="section-tag">Open workflow</div>
+    <h2 class="section-h2">Built-in help. Your own tools.</h2>
+    <p class="section-body">Loop can draft a model with you, explain it back to you, and check it. Prefer your own AI assistant? Connect it.</p>
+    <div class="open-grid reveal">
+      <div class="open-card">
+        <span class="open-icon">✏️</span>
+        <h3 class="open-title">Build with Loop</h3>
+        <p class="open-body">Describe the system in plain language and review the draft before anything changes, or let a guided interview build it one question at a time.</p>
+      </div>
+      <div class="open-card">
+        <span class="open-icon">💬</span>
+        <h3 class="open-title">Understand with Loop</h3>
+        <p class="open-body">Ask how a value is calculated or what feeds it. Answers come from the model's own structure, and asking never changes the model.</p>
+      </div>
+      <div class="open-card">
+        <span class="open-icon">🔓</span>
+        <h3 class="open-title">Use your own AI tools</h3>
+        <p class="open-body">Connect an assistant such as Claude through Loop's MCP server to build, run, test and document models. It runs on your own computer over plain model files.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-inner">
+    <div class="section-tag">Capabilities</div>
+    <h2 class="section-h2">Design. Run. Understand. Share.</h2>
+    <p class="section-body">One model, from the first sketch to the simulator you hand to a client.</p>
+    <div class="feat-grid reveal">
+      <div class="feat-card primary" style="grid-column: 1 / -1;">
+        <span class="feat-icon">✏️</span>
+        <h3 class="feat-title">Design — several ways into the same model</h3>
+        <p class="feat-body">Every editor works on one shared model, so you can switch between them at any time.</p>
+        <div class="feat-detail feat-detail-grid" style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap: 2rem; margin-top: 1rem;">
+          <div>
+            <div style="color: var(--teal); font-weight: 600; margin-bottom: 0.3rem;">Describe &amp; Interview</div>
+            Plain-language drafting<br>
+            One question at a time<br>
+            Review before it touches the model
+          </div>
+          <div>
+            <div style="color: var(--teal); font-weight: 600; margin-bottom: 0.3rem;">Draw</div>
+            Classic stock-and-flow notation<br>
+            Sub-models you can collapse<br>
+            Automatic layout
+          </div>
+          <div>
+            <div style="color: var(--teal); font-weight: 600; margin-bottom: 0.3rem;">Edit &amp; Define</div>
+            Spreadsheet view of every variable<br>
+            Forms, lookup curves, subscripts<br>
+            Units checked as you go
+          </div>
+          <div>
+            <div style="color: var(--teal); font-weight: 600; margin-bottom: 0.3rem;">Import</div>
+            XMILE (Stella, Insight Maker)<br>
+            Vensim .mdl (scalar models)<br>
+            An import report before anything is created
+          </div>
+        </div>
+      </div>
+      <div class="feat-card">
+        <span class="feat-icon">▶️</span>
+        <h3 class="feat-title">Run — experiments, not just a chart</h3>
+        <p class="feat-body">Move the sliders, save scenarios and compare them side by side.</p>
+        <div class="feat-detail">Euler and RK4 integration<br>Sensitivity sweeps and two-way grids<br>Monte Carlo with percentile bands<br>Fit to data and calibration</div>
+      </div>
+      <div class="feat-card">
+        <span class="feat-icon">🔍</span>
+        <h3 class="feat-title">Understand — which loop is in charge</h3>
+        <p class="feat-body">Loop finds the feedback loops, labels them reinforcing or balancing, and shows which one drove the run, and when.</p>
+        <div class="feat-detail">Loop detection and polarity<br>Loop dominance over the run<br>"How this works" for any variable<br>Ask questions about the model</div>
+      </div>
+      <div class="feat-card">
+        <span class="feat-icon">✅</span>
+        <h3 class="feat-title">Check — evidence you can show</h3>
+        <p class="feat-body">Four separate verdicts instead of one score: is it sound, robust, substantiated and readable?</p>
+        <div class="feat-detail">A test suite stored with the model<br>Step-size and extreme-condition checks<br>Evidence and assumptions on every element<br>Reproduce any saved run</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXAMPLE -->
+<section class="scenario" id="example">
+  <div class="section-inner">
+    <div class="section-tag">Worked example</div>
+    <h2 class="section-h2">An epidemic, from structure to behaviour.</h2>
+    <div class="scenario-intro reveal">
+      <p class="scenario-p">The classic SIR model is one of Loop's built-in templates. Three stocks of people (susceptible, infected and recovered) and two flows between them.</p>
+      <p class="scenario-p">Run it and the feedback shows itself: infection grows on itself until the susceptible pool runs low, then the balancing loop takes over and the outbreak burns out.</p>
+    </div>
+    <div class="scenario-proof reveal">
+      <div class="scenario-stat"><span class="scenario-stat-icon">✏️</span><strong>Design</strong><span>Stocks, flows and the equations behind them</span></div>
+      <div class="scenario-stat"><span class="scenario-stat-icon">▶️</span><strong>Run</strong><span>Simulate forward and watch the curves form</span></div>
+      <div class="scenario-stat"><span class="scenario-stat-icon">🔍</span><strong>Understand</strong><span>See which loop drives each phase of the run</span></div>
+      <div class="scenario-stat"><span class="scenario-stat-icon">🌐</span><strong>Share</strong><span>Publish it as a simulator with your cases</span></div>
+    </div>
+    <div class="complex-proof reveal">
+      <div class="shot-step">01 — Design</div>
+      <div class="complex-frame loop-canvas-frame">
+        <img src="/loop/images/stock-flow-canvas.png" alt="Loop's Draw canvas showing the SIR model: Susceptible, Infected and Recovered stocks connected by infection_rate and recovery_rate flows" loading="lazy">
+      </div>
+      <div class="complex-copy">
+        <div class="complex-title">The structure, in classic notation</div>
+        <p class="complex-body">Stocks are boxes, flows are pipes with valves, and clouds mark where material enters or leaves the system. Switch the view to add the auxiliaries, constants and causal links behind each flow.</p>
+      </div>
+    </div>
+    <div class="complex-proof reveal">
+      <div class="shot-step">02 — Run</div>
+      <div class="complex-frame loop-results-frame">
+        <img src="/loop/images/run-results.png" alt="Loop results chart for the SIR model over 100 weeks: susceptible falls, infected rises to a peak and falls, recovered rises and levels off" loading="lazy">
+      </div>
+      <div class="complex-copy">
+        <div class="complex-title">The behaviour that structure produces</div>
+        <p class="complex-body">The infected curve peaks as the susceptible pool runs down. Change the transmission rate on a slider and the peak moves straight away; save each setting as a scenario to compare later.</p>
+      </div>
+    </div>
+    <div class="section-tag" style="margin-top:3.5rem">Built for real models</div>
+    <h2 class="section-h2">Simple to start. Readable when it grows.</h2>
+    <div class="scenario-showcase">
+      <div class="shot-item reveal d1">
+        <div class="shot-title">Sub-models with a stated boundary</div>
+        <div class="shot-frame loop-inspector-frame">
+          <img src="/loop/images/sub-model-inspector.png" alt="A Demand sub-model on the canvas with its inputs, outputs and flow ports listed in the inspector, plus a How it works summary of what it holds, takes in and feeds out" loading="lazy">
+        </div>
+        <p class="shot-caption">Group a model into sub-models and declare what each one takes in and feeds out. Loop describes how each part works, warns when something crosses the boundary without a port, and can test a sub-model on its own.</p>
+      </div>
+      <div class="shot-item reveal d2">
+        <div class="shot-title">Follow the dependencies</div>
+        <div class="shot-frame">
+          <img src="/loop/images/dependency-view.png" alt="Dependency view of one sub-model in a large electricity supplier model, with the variables it reads and feeds arranged by sub-model" loading="lazy">
+        </div>
+        <p class="shot-caption">In a large model, pick a sub-model and see everything it reads and everything that reads it, arranged by where it lives. Download it as an image or print it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHARE -->
+<section class="how" id="share">
+  <div class="section-inner">
+    <div class="section-tag">Share</div>
+    <h2 class="section-h2">Hand over the simulator, not a screenshot.</h2>
+    <p class="section-body">Publish any model as a public page at a stable link. Visitors don't need an account, and the model runs in their own browser, so they can't change yours.</p>
+    <div class="open-grid reveal">
+      <div class="open-card">
+        <span class="open-icon">🎚️</span>
+        <h3 class="open-title">You choose what's exposed</h3>
+        <p class="open-body">Pick the parameters visitors can move, the outputs they see and the headline numbers. Embed it with an iframe snippet, or switch it off and the link stops working.</p>
+      </div>
+      <div class="open-card">
+        <span class="open-icon">🗂️</span>
+        <h3 class="open-title">Your cases, side by side</h3>
+        <p class="open-body">Publish the scenarios you ran as named cases. A comparison puts them on one chart per output, with a table of which case met which goal.</p>
+      </div>
+      <div class="open-card">
+        <span class="open-icon">📄</span>
+        <h3 class="open-title">Documents to take away</h3>
+        <p class="open-body">Visitors can download the model documentation and the case comparison as PDFs, with the evidence and assumptions included if you choose to share them.</p>
+      </div>
+    </div>
+    <p class="draft-flag">DRAFT: add a screenshot of, and a link to, an example published simulator.</p>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="audiences" id="for-who">
+  <div class="section-inner">
+    <div class="section-tag">Who it's for</div>
+    <h2 class="section-h2">For anyone whose problem changes over time.</h2>
+    <p class="section-body">You don't need a background in system dynamics. If the thing you care about builds up, drains away and feeds back on itself, Loop is built for it.</p>
+    <div class="aud-grid reveal">
+      <div class="aud-card">
+        <h3 class="aud-role">"I need to show a client what happens under each option."</h3>
+        <p class="aud-body">Build the model, run the cases, and publish them as a simulator with documentation behind it. The client moves the sliders themselves and sees the evidence for each assumption.</p>
+        <div class="aud-use">→ Deliver the model, not just the slide.</div>
+      </div>
+      <div class="aud-card">
+        <h3 class="aud-role">"We keep fixing this and it keeps coming back."</h3>
+        <p class="aud-body">Recurring problems usually have a loop behind them. Map what affects what, find the loop that keeps restoring the problem, and test where a change would actually stick.</p>
+        <div class="aud-use">→ Find the loop. Test the lever. Then act.</div>
+      </div>
+      <div class="aud-card">
+        <h3 class="aud-role">"I want to learn system dynamics properly."</h3>
+        <p class="aud-body">Start from a classic template, see the stocks and flows, and watch loop dominance shift during a run. Loop explains each variable from the model itself and doesn't hide how it works.</p>
+        <div class="aud-use">→ No install. No black box.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="section-inner">
+    <div class="section-tag">FAQ</div>
+    <h2 class="section-h2">Questions about Loop</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Do I need to know system dynamics already?</summary>
+        <p>No. Describe what you're modelling in plain language and Loop drafts a first version for you to review, or start from one of the templates. The user guide explains stocks, flows and loops as you meet them.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I bring models from Vensim or Stella?</summary>
+        <p>Yes. Loop imports XMILE files, including arrays of any number of dimensions, and Vensim .mdl files without subscripts. Before the model is created it shows a report of what it changed, what it left out and what needs your review. Models also export as XMILE and JSON.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do I have to use the AI features?</summary>
+        <p>No. You can build everything by hand on the canvas or in the forms, and the model checks work with no AI configured. The AI features are there to get you started faster and to explain results.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I use my own AI assistant?</summary>
+        <p>Yes. Loop's MCP server lets an assistant such as Claude build, validate, run, test and document Loop models. It runs locally over plain JSON model files, with no account needed and no data leaving your machine. There is also a downloadable prompt pack for chat tools.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Where do my models live?</summary>
+        <p>Models are saved to your Loop account and stay private unless you share them. You can invite named viewers or editors, make a model public, or publish it as a simulator. Every run keeps its own snapshot of the model, so history survives later edits.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What can't it do yet?</summary>
+        <p>Loop doesn't yet read data from Excel, databases or live sources (data comes in as CSV), there is no live co-editing, and integration is Euler or RK4 only. We'd rather say so than have you find out later.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <div class="cta-glow"></div>
+  <div style="position:relative">
+    <div class="section-tag" style="justify-content:center">Get started</div>
+    <h2 class="section-h2">See why it behaves the way it does.</h2>
+    <p class="section-body">Start from a template or a plain-language description.</p>
+    <div class="cta-btns">
+      <a href="https://loop.simmodlr.app/" class="btn-primary">Open Loop →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER (shared) -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-brand">simmodlr<span>.</span></a>
+    <ul class="footer-links">
+      <li><a href="/flow/">Flow</a></li>
+      <li><a href="/loop/">Loop</a></li>
+      <li><a href="/atlas/">Atlas</a></li>
+      <li><a href="/#apps">All apps</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 simmodlr · simmodlr.app</div>
+  </div>
+</footer>
+
+<script src="/assets/site.js"></script>
+</body>
+</html>

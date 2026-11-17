@@ -608,3 +608,9 @@ footer .draft-flag { display: block; width: fit-content; margin: 0.75rem auto 0;
 .how .shot-step { display: block; margin-bottom: 0.75rem; }
 /* Hero headlines with one long word (e.g. "Architecture") need a little less size on phones */
 @media(max-width:560px){ .hero-h1.long-word{ font-size:clamp(1.625rem, 8.4vw, 2.5rem); } }
+
+/* ── LOOP PAGE: screenshot frames sized to their images ── */
+.complex-frame.loop-canvas-frame { aspect-ratio: 2160 / 440; margin-top: 0.75rem; }
+.complex-frame.loop-results-frame { aspect-ratio: 2464 / 530; margin-top: 0.75rem; background: #fff; }
+.shot-frame.loop-inspector-frame { aspect-ratio: 1400 / 850; }
+.complex-proof + .complex-proof { margin-top: 1.25rem; }
