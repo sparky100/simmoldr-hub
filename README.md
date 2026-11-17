@@ -12,6 +12,7 @@ simmodlr is a family of apps. The site has one family landing page and one page 
 | `loop/index.html` | Loop's page at simmodlr.app/loop/. The app itself runs at https://loop.simmodlr.app/. |
 | `loop/images/` | Images used only by the Loop page. |
 | `atlas/index.html` | Atlas's page at simmodlr.app/atlas/. The app runs at https://atlas.simmodlr.app/. |
+| `lens/index.html` | Lens's page at simmodlr.app/lens/. The app runs at https://lens.simmodlr.app/. |
 | `assets/site.css` | Shared styles (themes, nav, footer, sections, app cards, FAQ). Every page uses it. |
 | `assets/site.js` | Shared behaviour (theme, scroll reveal, chart animation). |
 | `templates/app-page.html` | Starting point for a new app page: hero, features, example, FAQ, CTA. |
