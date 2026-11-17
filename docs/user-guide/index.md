@@ -1,4 +1,4 @@
-# DES Studio — User Guide
+# Flow — User Guide
 
 Version: 1.23.0 (Sprints 1–77)
 
@@ -6,9 +6,9 @@ Version: 1.23.0 (Sprints 1–77)
 
 ## 1. Introduction
 
-DES Studio is a browser-based discrete-event simulation tool for modellers who need to build, run, and analyse queue-based models without writing code. All model elements are configured through structured editors, a visual canvas, or an AI-assisted generator. Experiments are run directly in the browser; results appear as live animations, event logs, histograms, and statistical summaries.
+Flow is a browser-based discrete-event simulation tool for modellers who need to build, run, and analyse queue-based models without writing code. All model elements are configured through structured editors, a visual canvas, or an AI-assisted generator. Experiments are run directly in the browser; results appear as live animations, event logs, histograms, and statistical summaries.
 
-**Who it is for.** DES Studio targets simulation practitioners — analysts, engineers, operations researchers, and students — who understand queuing concepts (arrivals, service, waiting, resources) and want to move quickly from a scenario description to quantitative results.
+**Who it is for.** Flow targets simulation practitioners — analysts, engineers, operations researchers, and students — who understand queuing concepts (arrivals, service, waiting, resources) and want to move quickly from a scenario description to quantitative results.
 
 ---
 
@@ -28,7 +28,7 @@ Discrete-event simulation (DES) models a system by tracking *events* that happen
 
 #### The Three-Phase Method — explained simply
 
-DES Studio uses Pidd's Three-Phase Method:
+Flow uses Pidd's Three-Phase Method:
 
 | Phase | Plain English |
 |-------|--------------|
@@ -59,7 +59,7 @@ B handles *scheduled* triggers. C handles *state-driven* triggers. The separatio
 5. COMPLETE   → entity departs; server freed   (B-event fires)
 ```
 
-Everything else in DES Studio (priority, multi-stage routing, failures, cost tracking, loop guards) is layered on top of this pattern.
+Everything else in Flow (priority, multi-stage routing, failures, cost tracking, loop guards) is layered on top of this pattern.
 
 **Modelling workflow.** A typical workflow is:
 
@@ -76,11 +76,11 @@ Everything else in DES Studio (priority, multi-stage routing, failures, cost tra
 
 ### Sign-in and anonymous mode
 
-Open DES Studio in a modern browser. You can sign in with a Supabase-authenticated account (email/password or OAuth) or continue in **anonymous mode**, which stores all data in browser local storage. Anonymous models are private to that browser session; they are not backed up remotely. Sign in to unlock cloud saving and public sharing.
+Open Flow in a modern browser. You can sign in with a Supabase-authenticated account (email/password or OAuth) or continue in **anonymous mode**, which stores all data in browser local storage. Anonymous models are private to that browser session; they are not backed up remotely. Sign in to unlock cloud saving and public sharing.
 
 ### The Model Library
 
-After sign-in (or on first open), DES Studio shows the Model Library with two tabs:
+After sign-in (or on first open), Flow shows the Model Library with two tabs:
 
 | Tab | Contents |
 |-----|----------|
@@ -97,7 +97,7 @@ Then choose a starting point from the five options presented:
 |--------|-------------|----------|
 | **Draw** | Opens the Visual Designer canvas with an empty model | Modellers who prefer to sketch the flow graph first |
 | **Use a template** | Opens the template browser; selecting a template creates a private copy | Starting from a proven pattern (M/M/c, ER triage, call centre, etc.) |
-| **Import a file** | Opens a file picker for `.json` model files | Loading a model exported from another DES Studio instance or received as a file |
+| **Import a file** | Opens a file picker for `.json` model files | Loading a model exported from another Flow instance or received as a file |
 | **Paste model** | Opens a text area to paste model JSON | Quickly importing a model shared as text (e.g. from a colleague, a Claude conversation, or an AI-generated magic link) |
 | **Describe** | Opens the AI Model Generator | Bootstrapping a model from a plain-English scenario description |
 
@@ -184,7 +184,7 @@ Open the **C-Events** tab and create:
 - Effects: `ASSIGN(GP, Waiting Room)`
 - cSchedule: `Exponential`, mean: `12` — this schedules the GP Consultation B-Event at the computed completion time
 
-In every Phase C pass, DES Studio tests this condition. When a patient is waiting and a GP is free, the event fires: a patient is taken from the Waiting Room, assigned to a GP, and a completion event is placed in the event calendar.
+In every Phase C pass, Flow tests this condition. When a patient is waiting and a GP is free, the event fires: a patient is taken from the Waiting Room, assigned to a GP, and a completion event is placed in the event calendar.
 
 ### Step 5: Set a performance goal
 
@@ -196,7 +196,7 @@ Goals are used by the Explain panel and by sweep feasibility colouring. Without 
 
 ### Step 6: Run the model
 
-Open the **Execute** tab and click **Run All** (or use **Auto-run** with the speed slider). DES Studio will run the model to clock time 480.
+Open the **Execute** tab and click **Run All** (or use **Auto-run** with the speed slider). Flow will run the model to clock time 480.
 
 Switch to **Live View**: you will see animated entity tokens (circles) flowing from the Patient Arrives event into the Waiting Room queue, being picked up by the GP Consultation event, and departing. When both GPs are busy, tokens queue up visually.
 
@@ -227,7 +227,7 @@ Open **Experiments → Parametric Sweep**. Set:
 - Parameter: `GP count` (the server count of the GP entity type)
 - Range: `1` to `4`, step `1`
 
-Click **Run Sweep**. DES Studio runs the model once per parameter value. The results chart shows average wait time vs. GP count. Points that meet the goal (avgWait < 15) are coloured green; infeasible points are red. The best feasible point is annotated.
+Click **Run Sweep**. Flow runs the model once per parameter value. The results chart shows average wait time vs. GP count. Points that meet the goal (avgWait < 15) are coloured green; infeasible points are red. The best feasible point is annotated.
 
 ---
 
@@ -341,7 +341,7 @@ Use containers to model inventory, blood bank stocks, fuel reserves, or any depl
 
 ## 5. Effect Macros Reference
 
-Effect macros are the action vocabulary of DES Studio. They appear in the Effects field of B-Events and C-Events.
+Effect macros are the action vocabulary of Flow. They appear in the Effects field of B-Events and C-Events.
 
 | Macro | Syntax | What it does | When to use |
 |-------|--------|--------------|-------------|
@@ -438,7 +438,7 @@ time
 
 ### 6.1c Importing a schedule from a live REST endpoint (scheduleFeed)
 
-For use cases where the arrival plan is managed in an external system (e.g. an operating theatre booking system, an appointment platform, or an airline gate manifest), DES Studio can fetch the schedule directly before each run.
+For use cases where the arrival plan is managed in an external system (e.g. an operating theatre booking system, an appointment platform, or an airline gate manifest), Flow can fetch the schedule directly before each run.
 
 **Setup:**
 
@@ -455,7 +455,7 @@ For use cases where the arrival plan is managed in an external system (e.g. an o
 | Time field | Dot-notation path to the start-time field in each activity object (default: `time`) |
 | Attribute map | JSON object mapping API field paths to entity attribute names (e.g. `{ "patientName": "entityId", "surgeryType": "surgery_type" }`) |
 
-4. Save the model. When a run is started, DES Studio fetches the feed, converts timestamps using the model epoch, and injects the resulting rows into the target B-event — no manual import step required.
+4. Save the model. When a run is started, Flow fetches the feed, converts timestamps using the model epoch, and injects the resulting rows into the target B-event — no manual import step required.
 
 **`entityId` — naming individual entities.** If the attribute map includes `"someField": "entityId"`, the value from the API (e.g. the patient's name) becomes the entity's display name in the simulation UI and run results. This is how you track named individuals through the model.
 
@@ -474,7 +474,7 @@ Once a simulation is running against a pre-loaded schedule, an `actualsStream` d
 
 **How it works:**
 1. A WebSocket endpoint (e.g. from your booking or theatre system) sends messages as each procedure actually starts.
-2. DES Studio matches the `entityId` in the message to pre-scheduled FEL entries and reschedules them to the actual time.
+2. Flow matches the `entityId` in the message to pre-scheduled FEL entries and reschedules them to the actual time.
 3. When the entity arrives (at the actual time), the system remembers the planned time and records the deviation.
 4. The generated report includes a "Plan vs Actual" section showing average deviation in time units.
 
@@ -494,7 +494,7 @@ Once a simulation is running against a pre-loaded schedule, an `actualsStream` d
 
 ### 6.2 Model settings — time unit and simulation start time
 
-Two model-level fields in the **Model Data** tab control how DES Studio labels and anchors simulation time.
+Two model-level fields in the **Model Data** tab control how Flow labels and anchors simulation time.
 
 **Time unit** (`timeUnit`): Sets the label for one simulation time unit (e.g. `minutes`, `hours`, `seconds`). The label appears in the UI, in AI analysis text, and in exported reports. It does not affect engine calculations — it is purely a display annotation.
 
@@ -502,7 +502,7 @@ Two model-level fields in the **Model Data** tab control how DES Studio labels a
 
 The **Simulation start time** field (`epoch`) maps simulation time t=0 to a specific real-world calendar date and time. It is optional, but when set it unlocks several capabilities.
 
-**What it is.** Entering `2026-05-18T08:00:00` means "when the simulation clock reads 0, the real-world time is Monday 18 May 2026, 08:00." From that anchor, DES Studio can convert any simulation time to a wall-clock time and vice versa.
+**What it is.** Entering `2026-05-18T08:00:00` means "when the simulation clock reads 0, the real-world time is Monday 18 May 2026, 08:00." From that anchor, Flow can convert any simulation time to a wall-clock time and vice versa.
 
 **How to set it.** Open the **Model Data** tab for the model. Below the Time unit field, use the date/time picker to set the epoch. The value is stored in the model JSON as an ISO 8601 string (e.g. `"2026-05-18T08:00:00"`).
 
@@ -510,7 +510,7 @@ The **Simulation start time** field (`epoch`) maps simulation time t=0 to a spec
 
 1. **Report cover period line.** The generated report cover page shows the simulated period in plain English: e.g. "Period: Mon 18 May 08:00 → 16:00" (for a 480-minute run starting at 08:00).
 2. **Experiment controls.** The run setup panel displays real-world start and end times alongside the numeric duration, making it easier to confirm the run covers the intended shift or day.
-3. **CSV timestamp import.** When loading a planned-arrival CSV (see §6.1), the `time` column may contain real timestamps — either `HH:MM` format (e.g. `08:30`) or full ISO 8601 (e.g. `2026-05-18T10:45:00`) — instead of numeric simulation-time offsets. DES Studio converts each timestamp to a simulation-time offset using the epoch and time unit. Without an epoch, rows with timestamp-format times are skipped and a warning is shown.
+3. **CSV timestamp import.** When loading a planned-arrival CSV (see §6.1), the `time` column may contain real timestamps — either `HH:MM` format (e.g. `08:30`) or full ISO 8601 (e.g. `2026-05-18T10:45:00`) — instead of numeric simulation-time offsets. Flow converts each timestamp to a simulation-time offset using the epoch and time unit. Without an epoch, rows with timestamp-format times are skipped and a warning is shown.
 
 **Notes:**
 - The epoch field is optional. Models without it behave exactly as before — all times are treated as plain numeric offsets and no wall-clock conversion is applied.
@@ -526,7 +526,7 @@ Click **Run All** in the Execute panel to run the model from time 0 to the confi
 
 ### 7.2 Replication batch (confidence intervals)
 
-Open **Experiments → Replication Run**. Set the number of replications (typically 30–100) and optionally a different random seed per replication. DES Studio runs all replications in parallel and aggregates results:
+Open **Experiments → Replication Run**. Set the number of replications (typically 30–100) and optionally a different random seed per replication. Flow runs all replications in parallel and aggregates results:
 
 - Mean and 95% confidence interval for each KPI
 - Outlier detection (replications deviating more than 2σ from the batch mean are flagged)
@@ -542,9 +542,9 @@ Open the **Experiments** tab to save named run configurations — warm-up period
 
 Open the **Studies** tab.
 
-**1D sweep:** Choose one model parameter (e.g., server count, arrival rate, mean service time), set a range and step size. DES Studio runs the full replication batch at each parameter value and plots KPI vs. parameter.
+**1D sweep:** Choose one model parameter (e.g., server count, arrival rate, mean service time), set a range and step size. Flow runs the full replication batch at each parameter value and plots KPI vs. parameter.
 
-**2D sweep:** Choose two parameters, each with its own range. DES Studio runs a grid of experiments and renders a heatmap of the chosen KPI. Feasibility colouring applies: cells meeting all performance goals are green; cells that violate at least one goal are red. The best feasible point is annotated with a marker.
+**2D sweep:** Choose two parameters, each with its own range. Flow runs a grid of experiments and renders a heatmap of the chosen KPI. Feasibility colouring applies: cells meeting all performance goals are green; cells that violate at least one goal are red. The best feasible point is annotated with a marker.
 
 > **Note:** Study results are shown in charts and tables but are not saved to run history. Use saved Experiments if you need to persist run results.
 
@@ -714,7 +714,7 @@ Run comparison is available from **Results → History**. Select exactly two sav
 
 ## 9a. Help Assistant
 
-The Help Assistant provides contextual, in-app guidance accessible from any screen via the `?` button in the toolbar. Unlike the Explain panel (which analyses run results), the Help Assistant answers questions about how to use DES Studio itself.
+The Help Assistant provides contextual, in-app guidance accessible from any screen via the `?` button in the toolbar. Unlike the Explain panel (which analyses run results), the Help Assistant answers questions about how to use Flow itself.
 
 **How to use it.** Click the `?` button in the toolbar to open the Help Assistant panel. Type your question or click one of the suggested questions that appear based on your current screen.
 
@@ -745,7 +745,7 @@ Three utility buttons sit on the right side of the toolbar, to the left of the *
 
 | Button | Icon | What it does |
 |--------|------|-------------|
-| **Feedback** | Speech-bubble (◻) | Opens the Feedback widget — submit a bug report, feature request, question, or general comment directly to the DES Studio team |
+| **Feedback** | Speech-bubble (◻) | Opens the Feedback widget — submit a bug report, feature request, question, or general comment directly to the Flow team |
 | **About** | Info circle (ⓘ) | Opens the About panel — shows the app version, copyright, contact address, and the Three-Phase method attribution |
 | **Help** | `?` | Opens the Help Assistant (see §9a) |
 
@@ -768,7 +768,7 @@ If the submission fails (for example due to a network error), an error message a
 
 ### About panel
 
-Click the info-circle icon (labelled **About DES Studio**) to view the About panel. It shows:
+Click the info-circle icon (labelled **About Flow**) to view the About panel. It shows:
 - App name and version (e.g. `v7.0.0`)
 - Copyright notice
 - Contact address: [support@simmodlr.app](mailto:support@simmodlr.app)
@@ -802,7 +802,7 @@ Click and drag from a node's output port to another node's input port to create 
 | Event-to-queue | C/B-Event → Queue | This event routes entities to this queue |
 | Entity-to-event | Entity Type → B-Event | This entity type is the subject of the event |
 
-DES Studio validates connections and highlights invalid ports in red.
+Flow validates connections and highlights invalid ports in red.
 
 ### 10.3 Node inspector
 
@@ -852,7 +852,7 @@ Click the format you want to download it immediately. The event log can also be 
 
 ### 11.2 Export model as JSON
 
-From the Model Detail view click **Export Model**. DES Studio downloads the model definition as a `.json` file. This file can be imported into any DES Studio instance via **Import** in the Model Library.
+From the Model Detail view click **Export Model**. Flow downloads the model definition as a `.json` file. This file can be imported into any Flow instance via **Import** in the Model Library.
 
 ### 11.3 Create a simulation report
 
@@ -904,7 +904,7 @@ The following patterns cover the most frequently modelled scenarios. Each is ava
 
 ### Model validation errors
 
-DES Studio validates the model JSON before every run. Common errors:
+Flow validates the model JSON before every run. Common errors:
 
 | Error | Cause | Fix |
 |-------|-------|-----|
@@ -942,7 +942,7 @@ If the log shows "Phase C truncated after N iterations", a C-Event condition is 
 
 ## Model Versioning
 
-DES Studio supports first-class model versioning. For a full guide see `docs/sprint-68-model-versioning-guide.md`.
+Flow supports first-class model versioning. For a full guide see `docs/sprint-68-model-versioning-guide.md`.
 
 ### Named versions
 
@@ -962,7 +962,7 @@ In **Results → History**, click **⋯ → View model at this run** to see how 
 
 ## 14. Magic-Link Model Import
 
-DES Studio supports a **magic-link** import flow: an external tool (for example, a Claude conversation or a custom script) can generate a model JSON and produce a URL that, when opened, pre-loads the model into a review dialog before saving it to your library.
+Flow supports a **magic-link** import flow: an external tool (for example, a Claude conversation or a custom script) can generate a model JSON and produce a URL that, when opened, pre-loads the model into a review dialog before saving it to your library.
 
 ### URL format
 
@@ -979,8 +979,8 @@ Use the `encodeModelToLink` helper in `src/utils/importLink.js`:
 ```js
 import { encodeModelToLink } from './src/utils/importLink.js';
 
-const url = encodeModelToLink(modelJson, 'https://your-des-studio-domain.com');
-// → https://your-des-studio-domain.com/#import?m=eyJuYW1lIjoiLi4uIn0
+const url = encodeModelToLink(modelJson, 'https://flow.simmodlr.app');
+// → https://flow.simmodlr.app/#import?m=eyJuYW1lIjoiLi4uIn0
 ```
 
 When prompting an LLM to generate a model, append this instruction:
@@ -1071,7 +1071,7 @@ The selected schedule is passed to the simulation engine; arrivals fire at the t
 
 ### Exporting a model with schedules
 
-When you export a model as JSON (**Export Model** in the toolbar), schedule rows are automatically re-inlined into the exported JSON. The exported file is self-contained and can be imported into another DES Studio instance without needing the original schedule records.
+When you export a model as JSON (**Export Model** in the toolbar), schedule rows are automatically re-inlined into the exported JSON. The exported file is self-contained and can be imported into another Flow instance without needing the original schedule records.
 
 ### Typical workflow — multiple timetables
 
