@@ -3,564 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flow by simmodlr — Discrete-Event Simulation in Your Browser</title>
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>simmodlr — A family of modelling apps</title>
+<meta name="description" content="simmodlr is a family of browser-based modelling apps. Flow, the first, is a discrete-event simulation tool for queues, resources and service processes.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --bg:         #F5F8FB;
-  --bg-2:       #FFFFFF;
-  --bg-3:       #EAF1F5;
-  --teal:       #0F9D8A;
-  --teal-dim:   #0B7D6E;
-  --teal-faint: rgba(15,157,138,0.1);
-  --amber:      #E59B2E;
-  --white:      #163042;
-  --mid:        #5E7486;
-  --dim:        #B4C4CF;
-  --nav-bg:     rgba(245,248,251,0.88);
-  --nav-border: rgba(15,157,138,0.12);
-  --grid-line:  rgba(15,157,138,0.08);
-  --orb-glow:   radial-gradient(circle, rgba(15,157,138,0.18) 0%, transparent 62%);
-  --surface-border: rgba(15,157,138,0.14);
-  --surface-line: rgba(22,48,66,0.08);
-  --tag-bg:     rgba(15,157,138,0.08);
-  --tag-border: rgba(15,157,138,0.18);
-  --hero-note:  #7890A1;
-  --shadow-soft: 0 18px 50px rgba(39,72,94,0.08);
-  --syne:       'Syne', sans-serif;
-  --inter:      'Inter', sans-serif;
-  --mono:       'JetBrains Mono', monospace;
-}
-
-body[data-theme="paper"] {
-  --bg:         #F7F3EC;
-  --bg-2:       #FFFDF8;
-  --bg-3:       #EFE7D8;
-  --teal:       #0E8C78;
-  --teal-dim:   #0B6D5D;
-  --teal-faint: rgba(14,140,120,0.1);
-  --amber:      #C46B2D;
-  --white:      #2A241E;
-  --mid:        #6F675D;
-  --dim:        #D1C3B0;
-  --nav-bg:     rgba(247,243,236,0.9);
-  --nav-border: rgba(14,140,120,0.12);
-  --grid-line:  rgba(14,140,120,0.07);
-  --orb-glow:   radial-gradient(circle, rgba(196,107,45,0.16) 0%, transparent 62%);
-  --surface-border: rgba(14,140,120,0.14);
-  --surface-line: rgba(42,36,30,0.08);
-  --tag-bg:     rgba(14,140,120,0.07);
-  --tag-border: rgba(14,140,120,0.16);
-  --hero-note:  #8D7D6E;
-  --shadow-soft: 0 18px 50px rgba(74,54,30,0.09);
-}
-
-body[data-theme="blueprint"] {
-  --bg:         #EEF4FA;
-  --bg-2:       #FFFFFF;
-  --bg-3:       #DCE8F3;
-  --teal:       #18A999;
-  --teal-dim:   #14796D;
-  --teal-faint: rgba(24,169,153,0.1);
-  --amber:      #1476D1;
-  --white:      #122638;
-  --mid:        #607689;
-  --dim:        #B2C5D7;
-  --nav-bg:     rgba(238,244,250,0.88);
-  --nav-border: rgba(20,118,209,0.12);
-  --grid-line:  rgba(20,118,209,0.08);
-  --orb-glow:   radial-gradient(circle, rgba(20,118,209,0.16) 0%, transparent 62%);
-  --surface-border: rgba(20,118,209,0.14);
-  --surface-line: rgba(18,38,56,0.08);
-  --tag-bg:     rgba(20,118,209,0.07);
-  --tag-border: rgba(20,118,209,0.16);
-  --hero-note:  #7A91A4;
-  --shadow-soft: 0 18px 50px rgba(20,50,82,0.08);
-}
-
-body[data-theme="black"] {
-  --bg:         #070D15;
-  --bg-2:       #0C1520;
-  --bg-3:       #12202E;
-  --teal:       #0ECFB4;
-  --teal-dim:   #0AA897;
-  --teal-faint: rgba(14,207,180,0.1);
-  --amber:      #F6A623;
-  --white:      #EEF3F8;
-  --mid:        #6B8299;
-  --dim:        #2E4459;
-  --nav-bg:     rgba(7,13,21,0.85);
-  --nav-border: rgba(14,207,180,0.08);
-  --grid-line:  rgba(14,207,180,0.035);
-  --orb-glow:   radial-gradient(circle, rgba(14,207,180,0.09) 0%, transparent 62%);
-  --surface-border: rgba(14,207,180,0.15);
-  --surface-line: rgba(255,255,255,0.04);
-  --tag-bg:     rgba(14,207,180,0.08);
-  --tag-border: rgba(14,207,180,0.18);
-  --hero-note:  #2E4459;
-  --shadow-soft: 0 20px 60px rgba(0,0,0,0.45);
-}
-
-html { scroll-behavior: smooth; overflow-x: hidden; }
-body {
-  background: var(--bg);
-  color: var(--white);
-  font-family: var(--inter);
-  font-size: 16px;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1.1rem 3rem;
-  background: var(--nav-bg);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--nav-border);
-}
-.nav-brand {
-  font-family: var(--syne); font-size: 1.3rem; font-weight: 800;
-  color: var(--white); text-decoration: none; letter-spacing: -0.02em;
-  flex-shrink: 0;
-}
-.nav-brand span { color: var(--teal); }
-.nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
-.nav-links a {
-  color: var(--mid); text-decoration: none;
-  font-size: 0.875rem; transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--white); }
-.nav-btn {
-  background: var(--teal); color: var(--bg) !important;
-  padding: 0.5rem 1.25rem; border-radius: 6px;
-  font-weight: 600; font-size: 0.875rem; text-decoration: none;
-  transition: background 0.2s, transform 0.15s;
-}
-.nav-btn:hover { background: #17e8cc; transform: translateY(-1px); }
-
-/* ── HERO ── */
-.hero {
-  min-height: 100vh;
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 9rem 3rem 5rem;
-  position: relative; overflow: hidden;
-}
-.hero-grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 85% 65% at 55% 35%, black 15%, transparent 72%);
-}
-.hero-orb {
-  position: absolute; top: -15%; right: -8%;
-  width: 750px; height: 750px; border-radius: 50%;
-  background: var(--orb-glow);
-  pointer-events: none;
-}
-.hero-inner { position: relative; max-width: 1120px; margin: 0 auto; width: 100%; }
-
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  border: 1px solid var(--tag-border);
-  background: var(--tag-bg);
-  padding: 0.35rem 0.9rem; border-radius: 100px;
-  font-family: var(--mono); font-size: 0.68rem; color: var(--teal);
-  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem;
-  opacity: 0; animation: up 0.5s 0.1s ease forwards;
-}
-.badge-pulse {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--teal); animation: pulse 2s infinite;
-}
-
-.hero-h1 {
-  font-family: var(--syne); font-weight: 800;
-  font-size: clamp(3rem, 6.5vw, 5.5rem);
-  line-height: 1.02; letter-spacing: -0.035em;
-  color: var(--white); margin-bottom: 1.5rem; max-width: 820px;
-  opacity: 0; animation: up 0.6s 0.2s ease forwards;
-}
-.hero-h1 .teal { color: var(--teal); }
-
-.hero-sub {
-  font-size: 1.125rem; color: var(--mid);
-  max-width: 500px; line-height: 1.78; font-weight: 300;
-  margin-bottom: 2.75rem;
-  opacity: 0; animation: up 0.6s 0.3s ease forwards;
-}
-
-.hero-ctas {
-  display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
-  opacity: 0; animation: up 0.6s 0.4s ease forwards;
-}
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: var(--teal); color: var(--bg);
-  padding: 0.9rem 2rem; border-radius: 8px;
-  font-weight: 600; font-size: 0.9375rem; text-decoration: none;
-  transition: background 0.2s, transform 0.15s;
-}
-.btn-primary:hover { background: #17e8cc; transform: translateY(-1px); }
-.btn-ghost {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: transparent; color: var(--white);
-  padding: 0.9rem 1.75rem; border-radius: 8px; font-size: 0.9375rem;
-  text-decoration: none; border: 1px solid var(--dim);
-  transition: border-color 0.2s;
-}
-.btn-ghost:hover { border-color: var(--mid); }
-.hero-note {
-  margin-top: 1.25rem;
-  font-family: var(--mono); font-size: 0.68rem; color: var(--hero-note);
-  letter-spacing: 0.06em;
-  opacity: 0; animation: up 0.6s 0.5s ease forwards;
-}
-
-/* ── GENERIC SECTION ── */
-section { padding: 6rem 3rem; position: relative; overflow: hidden; }
-.section-inner { max-width: 1120px; margin: 0 auto; width: 100%; }
-.section-tag {
-  font-family: var(--mono); font-size: 0.67rem; color: var(--teal);
-  letter-spacing: 0.14em; text-transform: uppercase;
-  display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;
-}
-.section-tag::before { content: ''; width: 18px; height: 1px; background: var(--teal); }
-.section-h2 {
-  font-family: var(--syne); font-weight: 700;
-  font-size: clamp(1.875rem, 3.5vw, 2.875rem);
-  line-height: 1.08; letter-spacing: -0.025em;
-  color: var(--white); margin-bottom: 1rem;
-}
-.section-body {
-  font-size: 1.0625rem; color: var(--mid);
-  max-width: 560px; line-height: 1.78; font-weight: 300;
-}
-
-/* ── PROBLEM ── */
-.problem { background: var(--bg-2); }
-.problem-split {
-  display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr);
-  gap: 5rem; align-items: center; margin-top: 4rem;
-}
-.problem-points { list-style: none; display: flex; flex-direction: column; gap: 1.75rem; }
-.problem-point { display: flex; gap: 1rem; align-items: flex-start; }
-.pp-icon {
-  flex-shrink: 0; width: 38px; height: 38px;
-  border: 1px solid var(--surface-border); border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.05rem; margin-top: 0.1rem;
-  background: var(--tag-bg);
-}
-.pp-title { font-weight: 500; color: var(--white); margin-bottom: 0.25rem; font-size: 0.9375rem; }
-.pp-body { font-size: 0.875rem; color: var(--mid); line-height: 1.7; }
-
-/* chart */
-.chart-wrap {
-  background: var(--bg); border: 1px solid var(--surface-border);
-  border-radius: 12px; padding: 1.75rem; overflow: hidden;
-  box-shadow: var(--shadow-soft);
-}
-.chart-label {
-  font-family: var(--mono); font-size: 0.65rem; color: var(--mid);
-  letter-spacing: 0.09em; text-transform: uppercase; margin-bottom: 1.5rem;
-}
-.bars { display: flex; align-items: flex-end; gap: 0.875rem; height: 150px; }
-.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; height: 100%; justify-content: flex-end; }
-.bar {
-  width: 100%; border-radius: 4px 4px 0 0;
-  transform-origin: bottom; transform: scaleY(0);
-  transition: transform 0.8s cubic-bezier(0.34,1.2,0.64,1);
-  position: relative;
-}
-.bar.animate { transform: scaleY(1); }
-.bar-f { background: rgba(107,130,153,0.3); }
-.bar-a { background: var(--teal); }
-.bar-tip {
-  position: absolute; top: -1.4rem; left: 50%; transform: translateX(-50%);
-  font-family: var(--mono); font-size: 0.58rem; color: var(--white); white-space: nowrap;
-}
-.bar-key { font-family: var(--mono); font-size: 0.6rem; color: var(--mid); }
-.chart-legend {
-  display: flex; gap: 1.5rem; margin-top: 1.25rem;
-  padding-top: 1rem; border-top: 1px solid var(--surface-line);
-}
-.legend-i { display: flex; align-items: center; gap: 0.45rem; font-size: 0.73rem; color: var(--mid); }
-.legend-dot { width: 10px; height: 10px; border-radius: 2px; }
-
-/* ── OPEN WORKFLOW ── */
-.how { background: var(--bg); }
-.open-grid {
-  display: grid; grid-template-columns: repeat(3,minmax(0,1fr));
-  gap: 1.25rem; margin-top: 3.5rem;
-}
-.open-card {
-  background: var(--bg-2);
-  border: 1px solid var(--surface-line);
-  border-radius: 10px;
-  padding: 1.875rem;
-  box-shadow: var(--shadow-soft);
-}
-.open-icon { font-size: 1.375rem; margin-bottom: 0.875rem; display: block; }
-.open-title {
-  font-family: var(--syne); font-size: 1.125rem; font-weight: 700;
-  color: var(--white); margin-bottom: 0.625rem;
-}
-.open-body { font-size: 0.875rem; color: var(--mid); line-height: 1.72; }
-.tag {
-  font-family: var(--mono); font-size: 0.6rem; color: var(--teal);
-  background: var(--tag-bg); border: 1px solid var(--tag-border);
-  padding: 0.25rem 0.6rem; border-radius: 4px; letter-spacing: 0.04em;
-}
-
-/* ── FEATURES ── */
-.features { background: var(--bg-2); }
-.feat-grid {
-  display: grid; grid-template-columns: repeat(3,minmax(0,1fr));
-  gap: 1.25rem; margin-top: 3.5rem;
-}
-.feat-card {
-  padding: 1.875rem; border-radius: 10px;
-  background: var(--bg-2); border: 1px solid var(--surface-line);
-  transition: border-color 0.22s, transform 0.22s;
-  box-shadow: var(--shadow-soft);
-}
-.feat-card:hover { border-color: var(--surface-border); transform: translateY(-2px); }
-.feat-card.primary { border-color: var(--surface-border); background: linear-gradient(140deg, var(--tag-bg), var(--bg-2)); }
-.feat-icon { font-size: 1.375rem; margin-bottom: 0.875rem; display: block; }
-.feat-title {
-  font-family: var(--syne); font-size: 1.125rem; font-weight: 700;
-  color: var(--white); margin-bottom: 0.5rem;
-}
-.feat-body { font-size: 0.875rem; color: var(--mid); line-height: 1.72; }
-.feat-detail {
-  margin-top: 0.875rem; padding-top: 0.875rem;
-  border-top: 1px solid var(--surface-line);
-  font-family: var(--mono); font-size: 0.67rem;
-  color: var(--teal-dim); line-height: 1.85;
-}
-
-/* ── SCENARIO ── */
-.scenario { background: var(--bg); }
-.scenario-p { font-size: 1rem; color: var(--mid); line-height: 1.82; font-weight: 300; margin-bottom: 1.125rem; }
-.scenario-p strong { color: var(--white); font-weight: 500; }
-.scenario-proof {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
-  margin: 2rem 0 3.5rem;
-}
-.scenario-stat {
-  background: var(--bg);
-  border: 1px solid var(--surface-line);
-  border-radius: 10px;
-  padding: 1rem;
-}
-.scenario-stat-icon {
-  display: block;
-  font-size: 1.2rem;
-  line-height: 1;
-  margin-bottom: 0.6rem;
-}
-.scenario-stat strong {
-  display: block;
-  font-family: var(--syne);
-  font-size: 1.45rem;
-  line-height: 1;
-  color: var(--teal);
-  margin-bottom: 0.45rem;
-}
-.scenario-stat span {
-  display: block;
-  color: var(--mid);
-  font-size: 0.76rem;
-  line-height: 1.45;
-}
-
-/* ── SCENARIO SHOTS ── */
-.scenario-intro { max-width: 720px; margin-bottom: 3.5rem; }
-.scenario-intro + .scenario-proof { margin-top: -1.4rem; }
-.scenario-showcase {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem;
-  align-items: start;
-}
-.shot-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  background: var(--bg);
-  border: 1px solid var(--surface-line);
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: var(--shadow-soft);
-}
-.shot-item.primary { padding: 1rem; }
-.shot-step {
-  font-family: var(--mono); font-size: 0.62rem; color: var(--teal);
-  letter-spacing: 0.12em; text-transform: uppercase;
-}
-.shot-title {
-  font-family: var(--syne); font-size: 1.0625rem; font-weight: 700;
-  color: var(--white);
-}
-.shot-frame {
-  border-radius: 10px; overflow: hidden;
-  border: 1px solid var(--surface-border);
-  background: var(--bg-3);
-  display: flex; align-items: center; justify-content: center;
-  aspect-ratio: 16 / 10;
-}
-.shot-frame.proposal-frame { aspect-ratio: 16 / 9; }
-.shot-frame.run-frame { aspect-ratio: 3 / 1; }
-.shot-frame.explore-frame { aspect-ratio: 4 / 3; }
-.shot-frame.compare-frame { aspect-ratio: 1 / 1; }
-.shot-frame img {
-  display: block; width: 100%; height: 100%; object-fit: contain; object-position: top left;
-}
-.shot-frame.explore-frame img,
-.shot-frame.compare-frame img { object-position: top center; }
-.shot-caption { font-size: 0.8125rem; color: var(--mid); line-height: 1.62; }
-.complex-proof {
-  margin-top: 1.25rem;
-  background: var(--bg);
-  border: 1px solid var(--surface-line);
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: var(--shadow-soft);
-}
-.complex-frame {
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid var(--surface-border);
-  background: var(--bg-3);
-  aspect-ratio: 2310 / 803;
-}
-.complex-frame img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-}
-.complex-copy {
-  display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: 1.25rem;
-  margin-top: 1rem;
-  align-items: start;
-}
-.complex-title {
-  font-family: var(--syne);
-  font-size: 1.0625rem;
-  font-weight: 700;
-  color: var(--white);
-}
-.complex-body { font-size: 0.8125rem; color: var(--mid); line-height: 1.62; }
-/* ── AUDIENCES ── */
-.audiences { background: var(--bg-2); }
-.aud-grid {
-  display: grid; grid-template-columns: repeat(3,minmax(0,1fr));
-  gap: 1.25rem; margin-top: 3.5rem;
-}
-.aud-card {
-  padding: 1.875rem; border-radius: 10px;
-  background: var(--bg-2); border: 1px solid var(--surface-line);
-  box-shadow: var(--shadow-soft);
-}
-.aud-role {
-  font-family: var(--syne); font-size: 1.0625rem; font-weight: 700;
-  color: var(--white); margin-bottom: 0.625rem;
-}
-.aud-body { font-size: 0.875rem; color: var(--mid); line-height: 1.72; margin-bottom: 1.125rem; }
-.aud-use { font-family: var(--mono); font-size: 0.67rem; color: var(--teal); }
-
-/* ── CTA ── */
-.cta {
-  background: var(--bg);
-  border-top: 1px solid var(--nav-border);
-  text-align: center; padding: 7rem 3rem; position: relative; overflow: hidden;
-}
-.cta-glow {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  width: 700px; height: 280px; border-radius: 50%;
-  background: radial-gradient(ellipse, var(--tag-bg) 0%, transparent 68%);
-  pointer-events: none;
-}
-.cta .section-h2 { max-width: 560px; margin: 0 auto 1rem; }
-.cta .section-body { margin: 0 auto 2.5rem; text-align: center; max-width: 440px; }
-.cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-.cta-note { margin-top: 1.5rem; font-family: var(--mono); font-size: 0.67rem; color: var(--dim); letter-spacing: 0.06em; }
-
-/* ── FOOTER ── */
-footer {
-  background: var(--bg); padding: 2.25rem 3rem;
-  border-top: 1px solid var(--nav-border);
-}
-.footer-inner {
-  max-width: 1120px; margin: 0 auto;
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;
-}
-.footer-brand {
-  font-family: var(--syne); font-size: 1.1rem; font-weight: 800;
-  color: var(--white); text-decoration: none;
-}
-.footer-brand span { color: var(--teal); }
-.footer-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; }
-.footer-links a { font-size: 0.8125rem; color: var(--mid); text-decoration: none; transition: color 0.2s; }
-.footer-links a:hover { color: var(--white); }
-.footer-copy { font-family: var(--mono); font-size: 0.67rem; color: var(--dim); }
-
-/* ── ANIMATIONS ── */
-@keyframes up { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-.reveal { opacity:0; transform:translateY(18px); transition: opacity 0.65s ease, transform 0.65s ease; }
-.reveal.in { opacity:1; transform:translateY(0); }
-.d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s}
-
-/* ── RESPONSIVE ── */
-@media(max-width:900px){
-  nav{padding:1rem 1.5rem;} .nav-links{display:none;}
-  section{padding:4rem 1.5rem;} .hero{padding:7rem 1.5rem 4rem;}
-  .problem-split{grid-template-columns:1fr;gap:3rem;}
-  .scenario-proof{grid-template-columns:repeat(2,1fr);}
-  .scenario-showcase{grid-template-columns:1fr;}
-  .complex-copy{grid-template-columns:1fr;}
-  .open-grid,.feat-grid,.aud-grid{grid-template-columns:1fr;}
-  .feat-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
-  .footer-inner{flex-direction:column;text-align:center;} .footer-links{justify-content:center;}
-}
-@media(max-width:560px){
-  .hero{padding-left:1.25rem;padding-right:1.25rem;}
-  .hero-h1{
-    font-size:clamp(1.875rem, 10vw, 2.5rem);
-    line-height:1.08;
-    letter-spacing:0;
-    padding-right:0.08em;
-  }
-  .scenario-proof{grid-template-columns:1fr;}
-  .complex-frame{aspect-ratio:2310 / 803;}
-}
-</style>
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
 
-<!-- NAV -->
+<!-- NAV (shared: keep in step with /flow and templates/app-page.html) -->
 <nav>
   <a href="/" class="nav-brand">simmodlr<span>.</span></a>
   <ul class="nav-links">
-    <li><a href="#how">Open workflow</a></li>
-    <li><a href="#features">Capabilities</a></li>
-    <li><a href="#example">Example</a></li>
-    <li><a href="#for-who">Who it's for</a></li>
+    <li><a href="#apps">Apps</a></li>
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="/flow/">Flow</a></li>
     <li><a href="https://flow.simmodlr.app/" class="nav-btn">Try Flow →</a></li>
   </ul>
 </nav>
@@ -570,265 +27,63 @@ footer {
   <div class="hero-grid"></div>
   <div class="hero-orb"></div>
   <div class="hero-inner">
-    <div class="hero-badge"><div class="badge-pulse"></div>Flow by simmodlr — now live</div>
-    <h1 class="hero-h1">Understand your system<br>before you <span class="teal">commit to it.</span></h1>
+    <div class="hero-badge"><div class="badge-pulse"></div>A family of modelling apps</div>
+    <h1 class="hero-h1">Model the system.<br><span class="teal">Then decide.</span></h1>
     <p class="hero-sub">
-      simmodlr is a family of modelling apps. Flow, the first,
-      is a browser-based discrete-event simulation tool.
-      Model queues, resources, and service processes — no install,
-      no code, results you can rely on.
+      simmodlr builds browser-based modelling apps for people who need
+      honest answers about how a system behaves. Each app is focused on
+      one way of modelling, and they share one approach: no install,
+      no black box, results you can rely on.
     </p>
     <div class="hero-ctas">
-      <a href="https://flow.simmodlr.app/" class="btn-primary">Start modelling →</a>
-      <a href="#example" class="btn-ghost">See a worked example</a>
+      <a href="#apps" class="btn-primary">See the apps →</a>
+      <a href="/flow/" class="btn-ghost">Meet Flow</a>
     </div>
-    <p class="hero-note">No install · Runs entirely in your browser · flow.simmodlr.app</p>
+    <p class="hero-note">No install · Runs in your browser · simmodlr.app</p>
   </div>
 </section>
 
-<!-- PROBLEM -->
-<section class="problem" id="problem">
+<!-- APPS (add one card per app; each links to /<app>/) -->
+<section class="apps" id="apps">
   <div class="section-inner">
-    <div class="section-tag">The problem</div>
-    <h2 class="section-h2">Spreadsheets lie about queues.</h2>
-    <p class="section-body">Queueing formulas assume steady-state averages. Real systems don't work that way — and the gap between the formula and reality grows fast as utilisation rises.</p>
-    <div class="problem-split">
-      <ul class="problem-points reveal">
-        <li class="problem-point">
-          <div class="pp-icon">⚡</div>
-          <div>
-            <div class="pp-title">Variability is non-linear</div>
-            <p class="pp-body">A server at 90% utilisation has roughly nine times more wait time than one at 50% — not 80% more. The formula gives you the wrong number by a wide margin.</p>
-          </div>
-        </li>
-        <li class="problem-point">
-          <div class="pp-icon">📊</div>
-          <div>
-            <div class="pp-title">Distributions are not averages</div>
-            <p class="pp-body">Exponential service times and empirical service times produce different queue dynamics. Point estimates hide variance. Confidence intervals reveal it.</p>
-          </div>
-        </li>
-        <li class="problem-point">
-          <div class="pp-icon">🔗</div>
-          <div>
-            <div class="pp-title">Multi-stage systems compound</div>
-            <p class="pp-body">When stages share resources, blocking and starvation emerge that no formula predicts. Simulation models these interactions event by event.</p>
-          </div>
-        </li>
-      </ul>
-      <div class="reveal d2">
-        <div class="chart-wrap">
-          <div class="chart-label">Mean wait time — formula vs simulation (single server)</div>
-          <div class="bars" id="chartBars">
-            <div class="bar-col">
-              <div class="bar bar-f" style="height:14%"><span class="bar-tip">3m</span></div>
-              <div class="bar bar-a" style="height:16%"><span class="bar-tip">3.5m</span></div>
-              <div class="bar-key">50%</div>
-            </div>
-            <div class="bar-col">
-              <div class="bar bar-f" style="height:24%"><span class="bar-tip">5m</span></div>
-              <div class="bar bar-a" style="height:30%"><span class="bar-tip">6.5m</span></div>
-              <div class="bar-key">65%</div>
-            </div>
-            <div class="bar-col">
-              <div class="bar bar-f" style="height:40%"><span class="bar-tip">9m</span></div>
-              <div class="bar bar-a" style="height:52%"><span class="bar-tip">13m</span></div>
-              <div class="bar-key">80%</div>
-            </div>
-            <div class="bar-col">
-              <div class="bar bar-f" style="height:58%"><span class="bar-tip">18m</span></div>
-              <div class="bar bar-a" style="height:80%"><span class="bar-tip">41m</span></div>
-              <div class="bar-key">90%</div>
-            </div>
-            <div class="bar-col">
-              <div class="bar bar-f" style="height:70%"><span class="bar-tip">36m</span></div>
-              <div class="bar bar-a" style="height:100%"><span class="bar-tip">190m</span></div>
-              <div class="bar-key">95%</div>
-            </div>
-          </div>
-          <div class="chart-legend">
-            <div class="legend-i"><div class="legend-dot" style="background:rgba(107,130,153,0.4)"></div>Formula</div>
-            <div class="legend-i"><div class="legend-dot" style="background:var(--teal)"></div>Simulation</div>
-          </div>
-        </div>
+    <div class="section-tag">The apps</div>
+    <h2 class="section-h2">One family. Each app does one thing well.</h2>
+    <p class="section-body">Every app has its own page here and runs on its own address, so you can go straight to the one you need.</p>
+    <div class="app-grid reveal">
+      <a href="/flow/" class="app-card">
+        <span class="app-status">Live</span>
+        <span class="app-name">Flow</span>
+        <span class="app-kind">Discrete-event simulation</span>
+        <p class="app-body">Model queues, resources and service processes. Describe or draw the system, watch it run, find the bottleneck and test the change before you commit to it.</p>
+        <span class="app-links">Learn more → · flow.simmodlr.app</span>
+      </a>
+      <div class="app-card soon">
+        <span class="app-status">Coming next</span>
+        <span class="app-name">More apps</span>
+        <span class="app-kind">On the way</span>
+        <p class="app-body">Further apps will join Flow, each built around a different kind of modelling question and sharing the same open, browser-based approach.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- OPEN WORKFLOW -->
-<section class="how" id="how">
+<!-- APPROACH -->
+<section class="features" id="approach">
   <div class="section-inner">
-    <div class="section-tag">Open workflow</div>
-    <h2 class="section-h2">Built-in help. Your own tools.</h2>
-    <p class="section-body">Flow can help you build models, analyse results, and test improvements. Prefer your own AI tools? Use them too.</p>
-    <div class="open-grid reveal">
-      <div class="open-card">
-        <span class="open-icon">✏️</span>
-        <h3 class="open-title">Build with Flow</h3>
-        <p class="open-body">Create a model from a plain-English description, then inspect and edit it.</p>
+    <div class="section-tag">The approach</div>
+    <h2 class="section-h2">What every simmodlr app shares.</h2>
+    <div class="principles reveal">
+      <div class="principle">
+        <h3>Runs in your browser</h3>
+        <p>Nothing to install and no licence barrier. Open the app and start modelling.</p>
       </div>
-      <div class="open-card">
-        <span class="open-icon">📊</span>
-        <h3 class="open-title">Analyse with Flow</h3>
-        <p class="open-body">Explore results, identify pressure points, and generate recommendations.</p>
+      <div class="principle">
+        <h3>No black box</h3>
+        <p>Models are open to inspection, so you can see how a result was reached and explain it to others.</p>
       </div>
-      <div class="open-card">
-        <span class="open-icon">🔓</span>
-        <h3 class="open-title">Use your own AI tools</h3>
-        <p class="open-body">Share the Flow schema with any AI chat tool, ask it to build a model, and import the result — no lock-in, no black box.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features" id="features">
-  <div class="section-inner">
-    <div class="section-tag">Capabilities</div>
-    <h2 class="section-h2">Design. Run. Analyse. Change.</h2>
-    <p class="section-body">Build the model, watch it run, understand the results, then test the change — all in one browser workflow.</p>
-    <div class="feat-grid reveal">
-      <div class="feat-card primary" style="grid-column: 1 / -1;">
-        <span class="feat-icon">✏️</span>
-        <h3 class="feat-title">Design — four ways to build your model</h3>
-        <p class="feat-body">Describe the system in plain English, draw it on the canvas, edit the forms directly — or bring a model built outside Flow and import it.</p>
-        <div class="feat-detail feat-detail-grid" style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap: 2rem; margin-top: 1rem;">
-          <div>
-            <div style="color: var(--teal); font-weight: 600; margin-bottom: 0.3rem;">Describe</div>
-            Describe your process in plain English<br>
-            Flow builds the first version<br>
-            Review and adjust before anything runs
-          </div>
-          <div>
-            <div style="color: var(--teal); font-weight: 600; margin-bottom: 0.3rem;">Draw</div>
-            Drag-and-drop layout<br>
-            Stays in sync with the editors<br>
-            Easy visual checking
-          </div>
-          <div>
-            <div style="color: var(--teal); font-weight: 600; margin-bottom: 0.3rem;">Form Based</div>
-            Robust, validated, easy to use<br>
-            Define entities, events, and queues
-          </div>
-          <div>
-            <div style="color: var(--teal); font-weight: 600; margin-bottom: 0.3rem;">Use an AI Chat tool</div>
-            Share the Flow schema with any AI chat tool<br>
-            Ask it to build the model for you<br>
-            Import the result directly into Flow
-          </div>
-        </div>
-      </div>
-      <div class="feat-card">
-        <span class="feat-icon">▶️</span>
-        <h3 class="feat-title">Run — robust experiments</h3>
-        <p class="feat-body">Watch queues form, resources become busy, and entities move through the process.</p>
-        <div class="feat-detail">Live flow on the canvas<br>Queues, completions and utilisation<br>Visible behaviour before conclusions</div>
-      </div>
-      <div class="feat-card">
-        <span class="feat-icon">📊</span>
-        <h3 class="feat-title">Analyse — confidence in the results</h3>
-        <p class="feat-body">Explore builds confidence in the results and highlights what needs attention.</p>
-        <div class="feat-detail">Confidence target checking<br>Plain-English explanation<br>Pressure points highlighted</div>
-      </div>
-      <div class="feat-card">
-        <span class="feat-icon">🔁</span>
-        <h3 class="feat-title">Change — test improvements safely</h3>
-        <p class="feat-body">Test a proposed change, compare the result, then save what works.</p>
-        <div class="feat-detail">Temporary model changes<br>Before-and-after comparison<br>Save only what works</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SCENARIO -->
-<section class="scenario" id="example">
-  <div class="section-inner">
-    <div class="section-tag">Worked example</div>
-    <h2 class="section-h2">A&amp;E triage, from prompt to tested change in minutes.</h2>
-    <div class="scenario-intro reveal">
-      <p class="scenario-p">A plain-English brief becomes a working emergency-department model: arrivals, triage, queues, doctors, and exits.</p>
-      <p class="scenario-p">Then Flow runs it, analyses the results, recommends a doctor-capacity change, and tests it before anything is saved.</p>
-    </div>
-
-    <div class="scenario-proof reveal">
-      <div class="scenario-stat"><span class="scenario-stat-icon">✏️</span><strong>Design</strong><span>Describe the system and review the proposed model</span></div>
-      <div class="scenario-stat"><span class="scenario-stat-icon">▶️</span><strong>Run</strong><span>Execute the pathway and watch the model behave</span></div>
-      <div class="scenario-stat"><span class="scenario-stat-icon">📊</span><strong>Analyse</strong><span>Build confidence and understand the pressure points</span></div>
-      <div class="scenario-stat"><span class="scenario-stat-icon">🔁</span><strong>Change</strong><span>Test the improvement before saving it to the model</span></div>
-    </div>
-
-    <div class="scenario-showcase">
-      <div class="shot-item reveal d1">
-        <div class="shot-step">01 — Design</div>
-        <div class="shot-title">Flow drafts the model from the brief</div>
-        <div class="shot-frame proposal-frame">
-          <img src="images/Proposed Model.png" alt="Model proposal describing emergency department triage with arrivals, triage queue, doctor priority queue, resources, and exits" loading="lazy">
-        </div>
-        <p class="shot-caption">Review the proposed flow before saving it to the model library.</p>
-      </div>
-
-      <div class="shot-item reveal d2">
-        <div class="shot-step">02 — Run</div>
-        <div class="shot-title">Watch the process in action</div>
-        <div class="shot-frame run-frame">
-          <img src="images/Run.png" alt="Running model canvas showing patient arrivals, triage queue, doctor queue, exit, doctor consultation complete, utilisation, throughput, and waiting counts" loading="lazy">
-        </div>
-        <p class="shot-caption">Seeing the model run makes the process visible: queues, movement, resource use, and flow. Flow lets you run experiments by changing model parameters and testing values over ranges — so you can understand behaviour, not just observe it.</p>
-      </div>
-
-      <div class="shot-item primary reveal d3">
-        <div class="shot-step">03 — Analyse</div>
-        <div class="shot-title">Explore provides confidence in the results</div>
-        <div class="shot-frame explore-frame">
-          <img src="images/Screenshot 2026-06-03 061616.png" alt="Explore results summary showing confidence achieved with 45 replications, average wait, time in system, arrivals, served patients, and no early leavers" loading="lazy">
-        </div>
-        <p class="shot-caption">Explore builds confidence, summarises the results, and recommends what to change next.</p>
-      </div>
-
-      <div class="shot-item reveal d4">
-        <div class="shot-step">04 — Change</div>
-        <div class="shot-title">Test the proposed change safely</div>
-        <div class="shot-frame compare-frame">
-          <img src="images/Comapre.png" alt="Analyse and compare panel showing doctor bottleneck, proposed doctor capacity change from 3 to 4, and before-after performance metrics" loading="lazy">
-        </div>
-        <p class="shot-caption">Test the recommendation, compare the result, and save it when it works.</p>
-      </div>
-    </div>
-
-    <div class="complex-proof reveal">
-      <div class="complex-frame">
-        <img src="images/Complex.png" alt="Large Flow model organised into coloured sections with many connected queues, activities, resources, routes, and handoffs" loading="lazy">
-      </div>
-      <div class="complex-copy">
-        <div class="complex-title">Simple to start. Built for real systems.</div>
-        <p class="complex-body">The triage example is easy to follow, but the same canvas can hold larger pathways too. Sections help organise complex models with branching routes, shared resources, priorities, and handoffs across a whole service.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WHO IT'S FOR -->
-<section class="audiences" id="for-who">
-  <div class="section-inner">
-    <div class="section-tag">Who it's for</div>
-    <h2 class="section-h2">If you have a problem to solve, this is for you.</h2>
-    <p class="section-body">You do not need a background in simulation. If you have a real problem and need an honest answer, this is for you.</p>
-    <div class="aud-grid reveal">
-      <div class="aud-card">
-        <h3 class="aud-role">"We need to understand this before we spend the money."</h3>
-        <p class="aud-body">A decision is coming — a new service, a change in staffing, an investment in capacity. You need numbers you can defend, not a back-of-envelope estimate. Flow gives you a model you can run, tweak, and present — built in hours, not weeks.</p>
-        <div class="aud-use">→ Run the scenarios. Know the risks before you commit.</div>
-      </div>
-      <div class="aud-card">
-        <h3 class="aud-role">"The system is struggling and I need to know why."</h3>
-        <p class="aud-body">Queues are building. Waits are longer than they should be. Something isn't working but it's not obvious where the problem actually is. Simulation lets you see inside the system — test changes safely before touching anything real.</p>
-        <div class="aud-use">→ Find the bottleneck. Test the fix. Then act.</div>
-      </div>
-      <div class="aud-card">
-        <h3 class="aud-role">"I want to learn simulation properly, without the cost."</h3>
-        <p class="aud-body">You're studying operations, engineering, or healthcare systems — or teaching it. Commercial simulation tools are expensive and slow to learn. Flow runs in a browser, and doesn't hide how it works.</p>
-        <div class="aud-use">→ No install. No licence barrier. No black box.</div>
+      <div class="principle">
+        <h3>Help built in</h3>
+        <p>Built-in guidance helps you get from a question to a working model, and you can bring your own tools too.</p>
       </div>
     </div>
   </div>
@@ -839,48 +94,28 @@ footer {
   <div class="cta-glow"></div>
   <div style="position:relative">
     <div class="section-tag" style="justify-content:center">Get started</div>
-    <h2 class="section-h2">Ready to trust your analysis?</h2>
-    <p class="section-body">Sign up to explore.</p>
+    <h2 class="section-h2">Start with Flow.</h2>
+    <p class="section-body">The first simmodlr app is live now.</p>
     <div class="cta-btns">
       <a href="https://flow.simmodlr.app/" class="btn-primary">Open Flow →</a>
+      <a href="/flow/" class="btn-ghost">Read about Flow</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- FOOTER (shared) -->
 <footer>
   <div class="footer-inner">
     <a href="/" class="footer-brand">simmodlr<span>.</span></a>
     <ul class="footer-links">
-      <li><a href="#how">Open workflow</a></li>
-      <li><a href="#features">Capabilities</a></li>
+      <li><a href="/flow/">Flow</a></li>
+      <li><a href="/#apps">All apps</a></li>
       <li><a href="#">Contact</a></li>
     </ul>
     <div class="footer-copy">© 2026 simmodlr · simmodlr.app</div>
   </div>
 </footer>
 
-<script>
-  document.body.dataset.theme = 'paper';
-
-  // Scroll reveal
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-  // Animate chart bars when in view
-  const chartObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.querySelectorAll('.bar').forEach((b, i) => {
-          setTimeout(() => b.classList.add('animate'), i * 80);
-        });
-        chartObs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.4 });
-  document.querySelectorAll('.chart-wrap').forEach(el => chartObs.observe(el));
-</script>
+<script src="/assets/site.js"></script>
 </body>
 </html>
